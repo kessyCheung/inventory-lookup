@@ -213,21 +213,15 @@
   // ── Product Image Map (keyword → image URL) ──────
   // Each entry: [keyword_to_match_in_項目, image_url]
   // When an item name contains the keyword, it uses that image
+  // Product image mapping: [keyword_in_item_name, image_url]
+  // Verified URLs from manufacturer CDNs. Add more as needed.
   const PRODUCT_IMAGES = [
-    ['a6400', 'https://www-cdn.djiits.com/reactor/assets/_next/static/media/sony-a6400.png'],
-    ['SONY a6400', 'https://www-cdn.djiits.com/reactor/assets/_next/static/media/sony-a6400.png'],
     ['Osmo Pocket 3', 'https://www-cdn.djiits.com/cms/uploads/551e7d13228ed00e3486566918a183fd@374*374.png'],
     ['DJI Action4', 'https://www-cdn.djiits.com/cms/uploads/fd525dd9cd6a4dec4c3ae81ebf35d8af@374*374.png'],
     ['DJI Action 4', 'https://www-cdn.djiits.com/cms/uploads/fd525dd9cd6a4dec4c3ae81ebf35d8af@374*374.png'],
-    ['Wireless GO II', 'https://edge.rode.com//images/products/variants/66/rode-wigo2_hero_image_final_2-rgb_1080x1080.png'],
     ['Wireless GO', 'https://edge.rode.com//images/products/variants/66/rode-wigo2_hero_image_final_2-rgb_1080x1080.png'],
     ['Wireless PRO', 'https://edge.rode.com/images/page/2207/modules/8803/rode-wireless-pro-hero-three-quarter-4000x4000-rgb-1080x1080-f521e30.png'],
-    ['VideoMicro', 'https://edge.rode.com//images/page/122/modules/4116/RØDE_VideoMicro_3-QUARTER_1080x1080.png'],
-    ['INSTA 360', 'https://www-cdn.djiits.com/cms/uploads/551e7d13228ed00e3486566918a183fd@374*374.png'],
-    ['Mavic Air', 'https://www-cdn.djiits.com/cms/uploads/fd525dd9cd6a4dec4c3ae81ebf35d8af@374*374.png'],
-    ['Mini 3 Pro', 'https://www-cdn.djiits.com/cms/uploads/551e7d13228ed00e3486566918a183fd@374*374.png'],
-    ['Godox', 'https://edge.rode.com//images/page/122/modules/4116/RØDE_VideoMicro_3-QUARTER_1080x1080.png'],
-    ['SHURE', 'https://edge.rode.com/images/page/2207/modules/8803/rode-wireless-pro-hero-three-quarter-4000x4000-rgb-1080x1080-f521e30.png'],
+    ['VideoMicro', 'https://edge.rode.com//images/page/122/modules/4116/R%C3%98DE_VideoMicro_3-QUARTER_1080x1080.png'],
   ];
 
   // ── Image Resolver ────────────────────────────────
@@ -375,12 +369,13 @@
           extraHtml += `<div class="meta-row"><span class="status-dot" style="background:${sColor}"></span>${escapeHtml(status)}</div>`;
         }
 
-        // Determine thumbnail: product image or category SVG
+        // Determine thumbnail: product image or category SVG fallback
         let thumbHtml;
         if (thumbSrc) {
-          thumbHtml = `<div class="card-thumb"><img src="${escapeHtml(thumbSrc)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=thumb-svg>${catSvg}</div>'"/></div>`;
+          const fallbackUri = svgToDataUri(catSvg);
+          thumbHtml = `<div class="card-thumb"><img src="${escapeHtml(thumbSrc)}" alt="" loading="lazy" data-fallback="${escapeHtml(fallbackUri)}" /></div>`;
         } else {
-          thumbHtml = `<div class="card-thumb"><div class="thumb-svg">${catSvg}</div></div>`;
+          thumbHtml = `<div class="card-thumb"><img src="${svgToDataUri(catSvg)}" alt="" /></div>`;
         }
 
         return `
@@ -470,6 +465,16 @@
     },
 
     bindCardClicks() {
+      // Handle thumbnail image errors — swap to fallback
+      dom.contentArea.querySelectorAll('.card-thumb img[data-fallback]').forEach(img => {
+        img.addEventListener('error', function () {
+          if (this.dataset.fallback) {
+            this.src = this.dataset.fallback;
+            this.removeAttribute('data-fallback');
+          }
+        });
+      });
+
       dom.contentArea.querySelectorAll('.item-card').forEach(card => {
         const handler = () => {
           const allCurrent = FilterEngine.getCurrent();
