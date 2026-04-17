@@ -57,7 +57,7 @@
     rows: [],
     sortKey: '編號',
     currentTab: '全部',  // current tab value (category name or location name)
-    currentMode: 'category', // 'category' | 'location' | 'all'
+    currentMode: 'location', // 'category' | 'location' | 'all'
     searchQuery: '',
     locationFilter: '',
   };
@@ -746,16 +746,25 @@
       this.initialized = true;
 
       // Each area: [位置名稱, x, y, width, height, color, sublabel]
+      // Coordinates match location-map.svg viewBox="0 0 900 560"
       const areas = [
-        { loc: '木櫃子左上', x: 123, y: 90, w: 86, h: 56, color: '#10b981', sub: '配件 / 記憶卡' },
-        { loc: '木櫃子右上', x: 221, y: 90, w: 86, h: 56, color: '#f59e0b', sub: '收音 / 麥克風' },
-        { loc: '木櫃子右中', x: 221, y: 154, w: 86, h: 56, color: '#0891b2', sub: '相機 / DJI 全套' },
-        { loc: '大推車（上）', x: 390, y: 78, w: 130, h: 68, color: '#e11d48', sub: '鍵盤 / 雜物' },
-        { loc: '大推車（中）', x: 390, y: 150, w: 130, h: 72, color: '#8b5cf6', sub: '三腳架 / 燈架' },
-        { loc: '大推車（下）', x: 390, y: 225, w: 130, h: 70, color: '#64748b', sub: '油壓腳架 / 兔籠' },
-        { loc: '小推車', x: 560, y: 155, w: 100, h: 140, color: '#ec4899', sub: '補光燈 / Godox' },
-        { loc: '洞洞板', x: 620, y: 55, w: 240, h: 220, color: '#6366f1', sub: '轉接頭 / 線材' },
-        { loc: '地上', x: 640, y: 320, w: 210, h: 170, color: '#94a3b8', sub: '環形燈 / 展示架' },
+        // 木櫃子 6 格 (translate 105,40 + door offsets)
+        { loc: '木櫃子左上', x: 113, y: 50, w: 96, h: 62, color: '#10b981', sub: '配件 / 記憶卡' },
+        { loc: '木櫃子右上', x: 219, y: 50, w: 96, h: 62, color: '#f59e0b', sub: '收音 / 麥克風' },
+        { loc: '木櫃子左中', x: 113, y: 120, w: 96, h: 62, color: '#78716c', sub: '膠帶' },
+        { loc: '木櫃子右中', x: 219, y: 120, w: 96, h: 62, color: '#0891b2', sub: '相機 / DJI 全套' },
+        { loc: '木櫃子左下', x: 113, y: 190, w: 96, h: 62, color: '#a3a3a3', sub: '白板備品' },
+        { loc: '木櫃子右下', x: 219, y: 190, w: 96, h: 62, color: '#dc2626', sub: '醫藥箱 / 口罩' },
+        // 大推車 3 層 (translate 380,35)
+        { loc: '大推車（上）', x: 385, y: 38, w: 130, h: 73, color: '#e11d48', sub: '鍵盤 / 雜物' },
+        { loc: '大推車（中）', x: 385, y: 115, w: 130, h: 76, color: '#8b5cf6', sub: '三腳架 / 燈架' },
+        { loc: '大推車（下）', x: 385, y: 195, w: 130, h: 78, color: '#64748b', sub: '油壓腳架 / 兔籠' },
+        // 小推車 (translate 545,115)
+        { loc: '小推車', x: 545, y: 115, w: 100, h: 145, color: '#ec4899', sub: '補光燈 / Godox' },
+        // 洞洞板 (translate 660,15)
+        { loc: '洞洞板', x: 660, y: 15, w: 220, h: 240, color: '#6366f1', sub: '轉接頭 / 線材' },
+        // 地上 (translate 660,290)
+        { loc: '地上', x: 660, y: 290, w: 200, h: 150, color: '#94a3b8', sub: '環形燈 / 展示架' },
       ];
 
       // Build clickable overlay areas on the SVG
