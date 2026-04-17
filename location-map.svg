@@ -75,43 +75,51 @@
     <text x="148" y="124" text-anchor="middle" font-size="7" fill="#9a8a6a">（44件・最多設備）</text>
   </g>
 
-  <!-- ═══ 大推車 (Big Cart) — black metal, center ═══ -->
-  <g transform="translate(380, 95)" filter="url(#shadow)">
-    <!-- Cart frame -->
-    <rect x="0" y="0" width="140" height="200" fill="#2a2a2a" rx="4"/>
+  <!-- ═══ 大推車 (Big Cart) — black metal, 3 tiers: 上/中/下 ═══ -->
+  <g transform="translate(380, 75)" filter="url(#shadow)">
+    <!-- Cart frame (taller for 3 tiers) -->
+    <rect x="0" y="0" width="140" height="230" fill="#2a2a2a" rx="4"/>
     <!-- Wheels -->
-    <circle cx="15" cy="205" r="8" fill="#444" stroke="#333" stroke-width="1.5"/>
-    <circle cx="125" cy="205" r="8" fill="#444" stroke="#333" stroke-width="1.5"/>
+    <circle cx="15" cy="236" r="8" fill="#444" stroke="#333" stroke-width="1.5"/>
+    <circle cx="125" cy="236" r="8" fill="#444" stroke="#333" stroke-width="1.5"/>
     <!-- Handle -->
     <rect x="-5" y="-15" width="150" height="8" fill="#333" rx="4"/>
     <rect x="-5" y="-15" width="6" height="20" fill="#333" rx="2"/>
     <rect x="139" y="-15" width="6" height="20" fill="#333" rx="2"/>
 
-    <!-- Shelf dividers -->
-    <rect x="5" y="60" width="130" height="3" fill="#444" rx="1"/>
-    <rect x="5" y="130" width="130" height="3" fill="#444" rx="1"/>
+    <!-- Shelf dividers (2 dividers = 3 sections) -->
+    <rect x="5" y="72" width="130" height="3" fill="#444" rx="1"/>
+    <rect x="5" y="148" width="130" height="3" fill="#444" rx="1"/>
 
-    <!-- Top shelf content hints (tripods) -->
-    <rect x="15" y="10" width="8" height="45" fill="#888" rx="2" transform="rotate(-5 19 32)"/>
-    <rect x="35" y="12" width="6" height="42" fill="#777" rx="2"/>
-    <rect x="55" y="8" width="7" height="48" fill="#999" rx="2" transform="rotate(3 58 32)"/>
+    <!-- Top shelf (上) — keyboard, speakers etc -->
+    <rect x="15" y="10" width="80" height="12" fill="#777" rx="2"/>
+    <rect x="100" y="14" width="25" height="20" fill="#666" rx="3"/>
+    <rect x="20" y="30" width="40" height="25" fill="#555" rx="4"/>
 
-    <!-- Middle shelf content hints -->
-    <rect x="15" y="68" width="50" height="30" fill="#555" rx="3"/>
-    <rect x="75" y="70" width="45" height="25" fill="#666" rx="3"/>
+    <!-- Middle shelf (中) — tripods, stands -->
+    <rect x="15" y="82" width="8" height="55" fill="#888" rx="2" transform="rotate(-5 19 110)"/>
+    <rect x="35" y="84" width="6" height="52" fill="#777" rx="2"/>
+    <rect x="55" y="80" width="7" height="58" fill="#999" rx="2" transform="rotate(3 58 110)"/>
+    <rect x="80" y="85" width="40" height="30" fill="#555" rx="3"/>
 
-    <!-- Bottom shelf content hints -->
-    <rect x="15" y="140" width="60" height="35" fill="#444" rx="4"/>
-    <rect x="85" y="145" width="40" height="28" fill="#555" rx="3"/>
+    <!-- Bottom shelf (下) — bags, heavy items -->
+    <rect x="15" y="158" width="60" height="40" fill="#444" rx="4"/>
+    <rect x="85" y="163" width="40" height="32" fill="#555" rx="3"/>
 
-    <!-- Labels -->
+    <!-- Labels — 上 -->
     <rect x="10" y="5" width="82" height="16" fill="rgba(255,255,255,0.9)" rx="3"/>
-    <text x="51" y="16" text-anchor="middle" font-size="9" fill="#333" font-weight="700">大推車（中）</text>
-    <text x="70" y="56" text-anchor="middle" font-size="7" fill="#aaa">三腳架 / 燈架</text>
+    <text x="51" y="16" text-anchor="middle" font-size="9" fill="#333" font-weight="700">大推車（上）</text>
+    <text x="70" y="66" text-anchor="middle" font-size="7" fill="#aaa">鍵盤 / 雜物</text>
 
-    <rect x="10" y="133" width="82" height="16" fill="rgba(255,255,255,0.9)" rx="3"/>
-    <text x="51" y="144" text-anchor="middle" font-size="9" fill="#333" font-weight="700">大推車（下）</text>
-    <text x="70" y="175" text-anchor="middle" font-size="7" fill="#aaa">油壓腳架 / 兔籠</text>
+    <!-- Labels — 中 -->
+    <rect x="10" y="77" width="82" height="16" fill="rgba(255,255,255,0.9)" rx="3"/>
+    <text x="51" y="88" text-anchor="middle" font-size="9" fill="#333" font-weight="700">大推車（中）</text>
+    <text x="70" y="140" text-anchor="middle" font-size="7" fill="#aaa">三腳架 / 燈架</text>
+
+    <!-- Labels — 下 -->
+    <rect x="10" y="152" width="82" height="16" fill="rgba(255,255,255,0.9)" rx="3"/>
+    <text x="51" y="163" text-anchor="middle" font-size="9" fill="#333" font-weight="700">大推車（下）</text>
+    <text x="70" y="205" text-anchor="middle" font-size="7" fill="#aaa">油壓腳架 / 兔籠</text>
   </g>
 
   <!-- ═══ 小推車 (Small Cart) — white, next to big cart ═══ -->
