@@ -335,6 +335,7 @@ select {
 .item-card[data-category="收音"] { border-left-color: var(--cat-audio); }
 .item-card[data-category="配件"] { border-left-color: var(--cat-accessory); }
 .item-card[data-category="支架"] { border-left-color: var(--cat-mount); }
+.item-card[data-category="鍵盤滑鼠"] { border-left-color: #e11d48; }
 
 /* Card Thumbnail — small uniform square, image fully visible (not cropped) */
 .card-thumb {

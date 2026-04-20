@@ -109,6 +109,7 @@
     <!-- Labels — 上 -->
     <rect x="10" y="5" width="82" height="16" fill="rgba(255,255,255,0.9)" rx="3"/>
     <text x="51" y="16" text-anchor="middle" font-size="9" fill="#333" font-weight="700">大推車（上）</text>
+    <text x="70" y="66" text-anchor="middle" font-size="7" fill="#aaa">鍵盤滑鼠</text>
 
     <!-- Labels — 中 -->
     <rect x="10" y="80" width="82" height="16" fill="rgba(255,255,255,0.9)" rx="3"/>

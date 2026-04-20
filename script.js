@@ -10,6 +10,7 @@
     audio: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none"><rect width="120" height="120" rx="12" fill="#ecfdf5"/><rect x="53" y="30" width="14" height="32" rx="7" stroke="#10b981" stroke-width="2.5" fill="none"/><path d="M42 55v3a18 18 0 0036 0v-3" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="60" y1="76" x2="60" y2="84" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/><line x1="50" y1="84" x2="70" y2="84" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/><text x="60" y="100" text-anchor="middle" fill="#10b981" font-family="sans-serif" font-size="11">收音</text></svg>`,
     accessory: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none"><rect width="120" height="120" rx="12" fill="#f5f3ff"/><rect x="35" y="40" width="50" height="35" rx="5" stroke="#8b5cf6" stroke-width="2.5" fill="none"/><rect x="45" y="50" width="12" height="8" rx="1" stroke="#8b5cf6" stroke-width="1.5" fill="none"/><rect x="63" y="50" width="12" height="8" rx="1" stroke="#8b5cf6" stroke-width="1.5" fill="none"/><rect x="45" y="62" width="12" height="8" rx="1" stroke="#8b5cf6" stroke-width="1.5" fill="none"/><rect x="63" y="62" width="12" height="8" rx="1" stroke="#8b5cf6" stroke-width="1.5" fill="none"/><text x="60" y="100" text-anchor="middle" fill="#8b5cf6" font-family="sans-serif" font-size="11">配件</text></svg>`,
     mount: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none"><rect width="120" height="120" rx="12" fill="#f1f5f9"/><circle cx="60" cy="35" r="6" stroke="#64748b" stroke-width="2.5" fill="none"/><line x1="60" y1="41" x2="60" y2="50" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/><line x1="60" y1="50" x2="38" y2="80" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/><line x1="60" y1="50" x2="82" y2="80" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/><line x1="60" y1="50" x2="60" y2="80" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="80" x2="44" y2="80" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><line x1="76" y1="80" x2="88" y2="80" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><line x1="54" y1="80" x2="66" y2="80" stroke="#64748b" stroke-width="2" stroke-linecap="round"/><text x="60" y="100" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="11">支架</text></svg>`,
+    keyboard: `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none"><rect width="120" height="120" rx="12" fill="#fff1f2"/><rect x="25" y="35" width="70" height="35" rx="5" stroke="#e11d48" stroke-width="2.5" fill="none"/><rect x="32" y="42" width="8" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><rect x="44" y="42" width="8" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><rect x="56" y="42" width="8" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><rect x="68" y="42" width="8" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><rect x="80" y="42" width="8" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><rect x="36" y="54" width="24" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><rect x="64" y="54" width="8" height="6" rx="1" stroke="#e11d48" stroke-width="1.2" fill="none"/><ellipse cx="60" cy="82" rx="12" ry="8" stroke="#e11d48" stroke-width="2" fill="none"/><line x1="60" y1="74" x2="60" y2="70" stroke="#e11d48" stroke-width="2" stroke-linecap="round"/><text x="60" y="105" text-anchor="middle" fill="#e11d48" font-family="sans-serif" font-size="11">鍵盤滑鼠</text></svg>`,
   };
 
   function svgToDataUri(svg) {
@@ -27,6 +28,7 @@
       '收音':   { color: '#10b981', label: 'audio' },
       '配件':   { color: '#8b5cf6', label: 'accessory' },
       '支架':   { color: '#64748b', label: 'mount' },
+      '鍵盤滑鼠': { color: '#e11d48', label: 'keyboard' },
     },
     defaultCategoryColor: '#94a3b8',
     // Display order and card behavior for each field
@@ -344,6 +346,17 @@
     // ─── Cables ───
     ['編織HDMI', 'https://jgsuperstore.com/cdn/shop/products/A_980ecbfe-2ecc-4e49-b985-5cc186ec9812.jpg?v=1662775548'],
     ['紅頭DP', 'https://m.media-amazon.com/images/I/71vvR7ZDUnL._AC_SL1500_.jpg'],
+
+    // ─── Keyboard / Mouse 鍵盤滑鼠 ───
+    ['Logitech 鍵盤 K580', 'https://resource.logitech.com/content/dam/logitech/en/products/keyboards/k580-multi-device-wireless-keyboard/gallery/k580-gallery-graphite-1.png'],
+    ['Logitech 有線鍵盤 K120', 'https://resource.logitech.com/content/dam/logitech/en/products/keyboards/k120/gallery/k120-gallery-01-new.png'],
+    ['i-Rocks', 'https://www.i-rocks.com/uploads/product/en/IRK01W_in%20G01.jpg'],
+    ['IRK01', 'https://www.i-rocks.com/uploads/product/en/IRK01W_in%20G01.jpg'],
+    ['apple 鍵盤', 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MXK83?wid=2000&hei=2000&fmt=jpeg&qlt=90'],
+    ['LEXMA', 'https://img.shoplineapp.com/media/image_clips/60389a3f0402ab00208c6376/original.jpg?1614322239'],
+    ['MS950R', 'https://img.shoplineapp.com/media/image_clips/60389a3f0402ab00208c6376/original.jpg?1614322239'],
+    ['Logitech滑鼠 M350', 'https://c1.neweggimages.com/ProductImageOriginal/26-197-436-S01.jpg'],
+    ['小米無線藍牙滑鼠', 'https://www.giztop.com/media/catalog/product/cache/97cc1143d2e20f2b0c8ea91aaa12053c/m/o/mouse.png'],
 
     // ─── Apple TV ───
     ['APPLE TV', 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/apple-tv-4k-hero-select-202210?wid=960&hei=600&fmt=p-jpg&qlt=95&.v=1664912661535'],
@@ -754,7 +767,7 @@
         // 木櫃子左中/左下/右下 不是器材，不需要跳轉
         { loc: '木櫃子右中', x: 219, y: 120, w: 96, h: 62, color: '#0891b2', sub: '相機 / DJI 全套' },
         // 大推車 3 層 (translate 380,35)
-        { loc: '大推車（上）', x: 385, y: 38, w: 130, h: 73, color: '#e11d48', sub: '鍵盤 / 雜物' },
+        { loc: '大推車（上）', x: 385, y: 38, w: 130, h: 73, color: '#e11d48', sub: '鍵盤滑鼠' },
         { loc: '大推車（中）', x: 385, y: 115, w: 130, h: 76, color: '#8b5cf6', sub: '三腳架 / 燈架' },
         { loc: '大推車（下）', x: 385, y: 195, w: 130, h: 78, color: '#64748b', sub: '油壓腳架 / 兔籠' },
         // 小推車 (translate 545,115)
