@@ -503,20 +503,37 @@
         const data = await resp.json();
         if (!data.success || !data.loans) return;
 
-        // 把所有借出中的 loan 套用到 state.rows
+        // 建一個借出中的 itemId 集合
+        const borrowedIds = new Set();
         for (const loan of data.loans) {
-          const itemId = (loan['編號'] || '').trim();
+          const id = (loan['編號'] || '').trim();
+          if (id) borrowedIds.add(id);
+        }
+
+        // 更新所有 rows
+        for (const row of app.state.rows) {
+          const itemId = (row['編號'] || '').trim();
           if (!itemId) continue;
-          for (const row of app.state.rows) {
-            if ((row['編號'] || '').trim() === itemId) {
-              row['狀態'] = '借出中';
-              row['借用人'] = loan['借用人姓名'] || '';
-              row['借出日期'] = loan['借出日期'] || '';
-              row['預計歸還日'] = loan['預計歸還日'] || '';
-              break;
-            }
+
+          if (borrowedIds.has(itemId)) {
+            // 這個器材是借出中
+            const loan = data.loans.find(l => (l['編號'] || '').trim() === itemId);
+            row['狀態'] = '借出中';
+            row['借用人'] = loan['借用人姓名'] || '';
+            row['借出日期'] = loan['借出日期'] || '';
+            row['預計歸還日'] = loan['預計歸還日'] || '';
+          } else if (row['狀態'] === '借出中') {
+            // CSV 說借出中但後端已歸還 → 清回可借用
+            row['狀態'] = '可借用';
+            row['借用人'] = '';
+            row['借出日期'] = '';
+            row['預計歸還日'] = '';
           }
         }
+
+        // 清除過期的 localStorage 快取
+        localStorage.removeItem(OptimisticCache.KEY);
+
         app.render();
       } catch (e) {
         // 靜默失敗，用 CSV 資料就好
