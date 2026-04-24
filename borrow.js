@@ -29,11 +29,10 @@
 
       get() {
         try {
-          const raw = sessionStorage.getItem(this.KEY);
+          const raw = localStorage.getItem(this.KEY);
           if (!raw) return {};
           const overrides = JSON.parse(raw);
           const now = Date.now();
-          // 清除過期的
           for (const id of Object.keys(overrides)) {
             if (now - overrides[id]._ts > this.MAX_AGE_MS) delete overrides[id];
           }
@@ -44,7 +43,7 @@
       set(itemId, updates) {
         const overrides = this.get();
         overrides[itemId] = { ...updates, _ts: Date.now() };
-        sessionStorage.setItem(this.KEY, JSON.stringify(overrides));
+        localStorage.setItem(this.KEY, JSON.stringify(overrides));
       },
 
       // 把快取套用到 state.rows
