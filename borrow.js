@@ -17,7 +17,7 @@
 
     // ═══ 設定 ═══════════════════════════════════════
     // ★★★ 部署 Apps Script 後，把 URL 貼到這裡 ★★★
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwU8wwkilZrDJa5qSoYUhYt_yCQc3d1IDjwBNhIZDz6eQuTfbuyUyjY_wxf2bPmBz0n/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyNua9zqK5E9ep7U6cvNkkCiAdcRwyz720SCtEqm9k0txNmOlFtlho9FxOT2oz8yL0KCA/exec';
 
     // 管理模式
     const isAdmin = new URLSearchParams(window.location.search).get('mode') === 'admin';
