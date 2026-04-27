@@ -535,11 +535,38 @@ select {
 .location-map-container {
   position: relative;
   width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #f0f9f0;
 }
 .location-map {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* On mobile: show map at larger native size with horizontal scroll
+   so text/icons stay legible without zooming */
+@media (max-width: 600px) {
+  .location-map {
+    min-width: 760px; /* roughly 2× phone width — text becomes readable */
+    width: 760px;
+  }
+  /* Hint scroll affordance */
+  .location-map-container::after {
+    content: '← 左右滑動 →';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(31,41,55,0.75);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 4;
+  }
 }
 
 /* Zoom button on map (top-right corner) */
