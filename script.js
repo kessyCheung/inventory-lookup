@@ -57,7 +57,7 @@
   // ── State ─────────────────────────────────────────
   const state = {
     rows: [],
-    sortKey: '編號',
+    sortKey: '項目',
     currentTab: '全部',  // current tab value (category name or location name)
     currentMode: 'location', // 'category' | 'location' | 'all'
     searchQuery: '',
@@ -357,6 +357,10 @@
     ['MS950R', 'https://img.shoplineapp.com/media/image_clips/60389a3f0402ab00208c6376/original.jpg?1614322239'],
     ['Logitech滑鼠 M350', 'https://c1.neweggimages.com/ProductImageOriginal/26-197-436-S01.jpg'],
     ['小米無線藍牙滑鼠', 'https://www.giztop.com/media/catalog/product/cache/97cc1143d2e20f2b0c8ea91aaa12053c/m/o/mouse.png'],
+
+    // ─── Headsets ───
+    ['Logitech zone wireless', 'https://resource.logitech.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/headsets/zone-wireless-2-es/gallery/teams-version-with-receiver/graphite/b2b-zone-wireless-2-es-business-headset-graphite-teams-version-with-receiver-image-1.png?v=1'],
+    ['Zone Wireless', 'https://resource.logitech.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/headsets/zone-wireless-2-es/gallery/teams-version-with-receiver/graphite/b2b-zone-wireless-2-es-business-headset-graphite-teams-version-with-receiver-image-1.png?v=1'],
 
     // ─── Apple TV ───
     ['APPLE TV', 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/apple-tv-4k-hero-select-202210?wid=960&hei=600&fmt=p-jpg&qlt=95&.v=1664912661535'],
@@ -789,6 +793,10 @@
         <div class="location-map-container">
           <img src="./location-map.svg" alt="器材室收納位置圖" class="location-map" />
           ${overlays}
+          <button type="button" class="map-zoom-btn" aria-label="放大檢視">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+            放大
+          </button>
         </div>`;
 
       // Bind clicks: click area → switch to that location tab
@@ -802,6 +810,45 @@
           dom.contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       });
+
+      // Zoom button: open full-screen overlay
+      const zoomBtn = dom.locationMap.querySelector('.map-zoom-btn');
+      if (zoomBtn) {
+        zoomBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.openZoom();
+        });
+      }
+    },
+
+    // Open zoom overlay
+    openZoom() {
+      let overlay = document.getElementById('mapZoomOverlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'mapZoomOverlay';
+        overlay.className = 'map-zoom-overlay';
+        overlay.innerHTML = `
+          <button type="button" class="map-zoom-close" aria-label="關閉">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="map-zoom-scroll">
+            <img src="./location-map.svg" alt="器材室收納位置圖（放大）" class="map-zoom-img" />
+          </div>`;
+        document.body.appendChild(overlay);
+        overlay.querySelector('.map-zoom-close').addEventListener('click', () => {
+          overlay.classList.remove('is-open');
+          document.body.style.overflow = '';
+        });
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            overlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
     },
 
     // Show or hide based on current mode
