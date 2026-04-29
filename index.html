@@ -4,56 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>器材檢索表</title>
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=6" />
 </head>
 <body>
   <div class="app">
-    <!-- Header -->
+    <!-- Header — title + stats inline as subtitle -->
     <header class="app-header">
       <h1>器材檢索表</h1>
-      <p class="app-subtitle">依類別或位置瀏覽器材，點擊卡片查看設備詳情與示意圖。</p>
+      <p class="app-stats-line">
+        共 <strong id="totalCount">0</strong> 件器材
+        · <strong id="categoryCount">0</strong> 個類別
+        · 目前顯示 <strong id="visibleCount">0</strong> 件
+      </p>
     </header>
 
-    <!-- Filter Panel -->
-    <div class="panel">
-      <div class="toolbar">
-        <div class="search-wrap">
-          <span class="search-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </span>
-          <input id="searchInput" placeholder="搜尋類別 / 編號 / 項目 / 位置" />
-        </div>
+    <!-- Mode toggle — most prominent (highest hierarchy) -->
+    <nav class="mode-nav" aria-label="瀏覽模式">
+      <button class="mode-btn active" id="modeLocationBtn" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        依位置
+      </button>
+      <button class="mode-btn" id="modeCategoryBtn" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        依分類
+      </button>
+      <button class="mode-btn" id="modeAllBtn" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        全部
+      </button>
+    </nav>
 
-        <select id="locationFilter">
-          <option value="">全部位置</option>
-        </select>
-
-        <select id="sortBy">
-          <option value="項目">依項目排序</option>
-          <option value="位置">依位置排序</option>
-        </select>
+    <!-- Filter bar — compact, secondary tools -->
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <span class="search-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input id="searchInput" placeholder="搜尋類別 / 編號 / 項目 / 位置" />
       </div>
-
-      <div class="mode-toggle">
-        <button class="mode-btn" id="modeCategoryBtn" type="button">分類瀏覽</button>
-        <button class="mode-btn active" id="modeLocationBtn" type="button">位置瀏覽</button>
-        <button class="mode-btn" id="modeAllBtn" type="button">全部列表</button>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><div class="label">總筆數</div><div class="value" id="totalCount">0</div></div>
-        <div class="stat"><div class="label">目前顯示</div><div class="value" id="visibleCount">0</div></div>
-        <div class="stat"><div class="label">類別數</div><div class="value" id="categoryCount">0</div></div>
-      </div>
+      <select id="locationFilter" aria-label="位置篩選">
+        <option value="">全部位置</option>
+      </select>
+      <select id="sortBy" aria-label="排序方式">
+        <option value="項目">依項目排序</option>
+        <option value="位置">依位置排序</option>
+      </select>
     </div>
 
-    <!-- Content Panel -->
-    <div class="panel">
-      <!-- Location Map (shown only in 位置瀏覽 mode) -->
+    <!-- Main content -->
+    <main class="content-panel">
       <div id="locationMap" class="location-map-wrap" hidden></div>
       <div class="tab-bar" id="tabBar"></div>
       <div id="contentArea"></div>
-    </div>
+    </main>
   </div>
 
   <!-- Detail Modal -->
@@ -67,7 +70,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="script.js"></script>
-  <script src="borrow.js"></script>
+  <script src="script.js?v=6"></script>
+  <script src="borrow.js?v=6"></script>
 </body>
 </html>

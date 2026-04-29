@@ -22,15 +22,16 @@
     csvUrl: './data.csv',
     imageBasePath: './images/',
     categoryColors: {
-      '轉接頭': { color: '#6366f1', label: 'adapter' },
-      '相機':   { color: '#0891b2', label: 'camera' },
-      '燈光':   { color: '#f59e0b', label: 'lighting' },
-      '收音':   { color: '#10b981', label: 'audio' },
-      '配件':   { color: '#8b5cf6', label: 'accessory' },
-      '支架':   { color: '#64748b', label: 'mount' },
-      '鍵盤滑鼠': { color: '#e11d48', label: 'keyboard' },
+      '轉接頭':   { color: '#5b6573', label: 'adapter' },
+      '相機':     { color: '#1b4332', label: 'camera' },
+      '燈光':     { color: '#d97706', label: 'lighting' },
+      '收音':     { color: '#2d6a4f', label: 'audio' },
+      '配件':     { color: '#6b7c4f', label: 'accessory' },
+      '支架':     { color: '#5b6573', label: 'mount' },
+      '鍵盤滑鼠': { color: '#6b7c4f', label: 'keyboard' },
+      '耳機':     { color: '#1b4332', label: 'headset' },
     },
-    defaultCategoryColor: '#94a3b8',
+    defaultCategoryColor: '#9aa3b2',
     // Display order and card behavior for each field
     fieldConfig: {
       '項目':       { order: 1, cardDisplay: 'title' },
@@ -45,12 +46,12 @@
       '最後更新時間': { order: 10, cardDisplay: 'modal-only' },
     },
     statusColors: {
-      '可借用': '#16a34a',
-      '可借': '#16a34a',
-      '借出中': '#ea580c',
-      '已借出': '#ea580c',
-      '維修中': '#dc2626',
-      '停用': '#9ca3af',
+      '可借用': '#2d6a4f',
+      '可借':   '#2d6a4f',
+      '借出中': '#d97706',
+      '已借出': '#d97706',
+      '維修中': '#b91c1c',
+      '停用':   '#adb5bd',
     },
   };
 
@@ -762,21 +763,22 @@
       // Always re-render: state.rows may have been loaded after first init
       // Each area: [位置名稱, x, y, width, height, color]
       // Coordinates match location-map.svg viewBox="0 0 1200 720"
+      // Palette: forest greens + warm amber + slates (cohesive earth tones)
       const areas = [
-        // 木櫃子 6 格 (translate 140,50 + door offsets)
-        { loc: '木櫃子左上', x: 150, y: 62, w: 130, h: 92, color: '#10b981' },
-        { loc: '木櫃子右上', x: 288, y: 62, w: 130, h: 92, color: '#f59e0b' },
-        { loc: '木櫃子右中', x: 288, y: 162, w: 130, h: 92, color: '#0891b2' },
-        // 大推車 3 層 (translate 490,50)
-        { loc: '大推車（上）', x: 500, y: 64, w: 160, h: 96, color: '#e11d48' },
-        { loc: '大推車（中）', x: 500, y: 166, w: 160, h: 96, color: '#8b5cf6' },
-        { loc: '大推車（下）', x: 500, y: 268, w: 160, h: 96, color: '#64748b' },
-        // 小推車 (translate 720,100)
-        { loc: '小推車', x: 720, y: 100, w: 140, h: 270, color: '#ec4899' },
-        // 洞洞板 (translate 900,60)
-        { loc: '洞洞板', x: 900, y: 60, w: 260, h: 310, color: '#6366f1' },
-        // 地上 (translate 900,440)
-        { loc: '地上', x: 900, y: 440, w: 260, h: 220, color: '#94a3b8' },
+        // 木櫃子 — forest green family
+        { loc: '木櫃子左上', x: 150, y: 62, w: 130, h: 92, color: '#2d6a4f' },
+        { loc: '木櫃子右上', x: 288, y: 62, w: 130, h: 92, color: '#6b7c4f' },
+        { loc: '木櫃子右中', x: 288, y: 162, w: 130, h: 92, color: '#1b4332' },
+        // 大推車 — slate family (3 shades)
+        { loc: '大推車（上）', x: 500, y: 64, w: 160, h: 96, color: '#475569' },
+        { loc: '大推車（中）', x: 500, y: 166, w: 160, h: 96, color: '#64748b' },
+        { loc: '大推車（下）', x: 500, y: 268, w: 160, h: 96, color: '#334155' },
+        // 小推車 — warm amber
+        { loc: '小推車', x: 720, y: 100, w: 140, h: 270, color: '#d97706' },
+        // 洞洞板 — sage olive
+        { loc: '洞洞板', x: 900, y: 60, w: 260, h: 310, color: '#84a98c' },
+        // 地上 — muted gray
+        { loc: '地上', x: 900, y: 440, w: 260, h: 220, color: '#9aa3b2' },
       ];
 
       // Build clickable overlay areas on the SVG (percentages of 1200×720)

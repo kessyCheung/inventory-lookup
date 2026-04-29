@@ -4,22 +4,27 @@
 
 /* ── CSS Variables ─────────────────────────── */
 :root {
-  --color-bg: #f0f2f8;
+  /* Base — warm neutrals (forest + linen palette) */
+  --color-bg: #f7f5f0;            /* warm cream background */
   --color-surface: #ffffff;
-  --color-text: #1a1d26;
-  --color-text-secondary: #5f6578;
-  --color-text-tertiary: #8b90a0;
-  --color-border: #e2e5f0;
-  --color-border-light: #eef0f6;
-  --color-accent: #4f5dd6;
-  --color-accent-hover: #424fbd;
-  --color-accent-soft: #eef0ff;
+  --color-surface-soft: #faf8f3;
+  --color-text: #1f2a37;          /* deep slate */
+  --color-text-secondary: #5b6573;
+  --color-text-tertiary: #9aa3b2;
+  --color-border: #e7e2d8;        /* warm beige */
+  --color-border-light: #f1ede4;
+
+  /* Primary — forest green */
+  --color-accent: #2d6a4f;        /* calm forest green */
+  --color-accent-hover: #1b4332;
+  --color-accent-soft: #e1efe7;
   --color-accent-text: #ffffff;
 
-  --color-available: #16a34a;
-  --color-borrowed: #ea580c;
-  --color-maintenance: #dc2626;
-  --color-disabled: #9ca3af;
+  /* Status — saturation reserved for meaningful signals */
+  --color-available: #2d6a4f;     /* matches primary (calm) */
+  --color-borrowed: #d97706;      /* amber — attention */
+  --color-maintenance: #b91c1c;   /* deep red — urgent */
+  --color-disabled: #adb5bd;
 
   --space-xs: 4px;
   --space-sm: 8px;
@@ -34,11 +39,11 @@
   --radius-xl: 20px;
   --radius-pill: 999px;
 
-  --shadow-xs: 0 1px 2px rgba(26,29,38,0.04);
-  --shadow-sm: 0 1px 4px rgba(26,29,38,0.06);
-  --shadow-md: 0 4px 16px rgba(26,29,38,0.08);
-  --shadow-lg: 0 8px 32px rgba(26,29,38,0.12);
-  --shadow-card-hover: 0 8px 24px rgba(26,29,38,0.12);
+  --shadow-xs: 0 1px 2px rgba(31,42,55,0.04);
+  --shadow-sm: 0 1px 4px rgba(31,42,55,0.05);
+  --shadow-md: 0 4px 16px rgba(31,42,55,0.07);
+  --shadow-lg: 0 8px 32px rgba(31,42,55,0.10);
+  --shadow-card-hover: 0 6px 18px rgba(31,42,55,0.08);
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
   --font-mono: "SF Mono", "Fira Code", "Consolas", monospace;
@@ -47,14 +52,14 @@
   --transition-normal: 200ms ease;
   --transition-slow: 300ms ease;
 
-  /* Category colors */
-  --cat-adapter: #6366f1;
-  --cat-camera: #0891b2;
-  --cat-lighting: #f59e0b;
-  --cat-audio: #10b981;
-  --cat-accessory: #8b5cf6;
-  --cat-mount: #64748b;
-  --cat-default: #94a3b8;
+  /* Category colors — derived from forest palette + 1 warm accent for lighting */
+  --cat-adapter: #5b6573;         /* slate */
+  --cat-camera: #1b4332;          /* deep forest */
+  --cat-lighting: #d97706;        /* amber (warm) */
+  --cat-audio: #2d6a4f;           /* forest */
+  --cat-accessory: #6b7c4f;       /* olive */
+  --cat-mount: #5b6573;           /* slate */
+  --cat-default: #9aa3b2;
 }
 
 /* ── Reset / Base ──────────────────────────── */
@@ -78,22 +83,29 @@ body {
 /* ── Header ────────────────────────────────── */
 .app-header {
   margin-bottom: var(--space-lg);
+  padding: 0 var(--space-xs);
 }
 .app-header h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-text);
 }
-.app-subtitle {
+.app-stats-line {
   color: var(--color-text-secondary);
   font-size: 14px;
-  margin-top: 6px;
+  margin-top: 8px;
+  font-weight: 400;
+}
+.app-stats-line strong {
+  color: var(--color-accent);
+  font-weight: 700;
 }
 
-/* ── Panel ─────────────────────────────────── */
-.panel {
+/* ── Panel (legacy, kept for content area) ──── */
+.panel,
+.content-panel {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -102,7 +114,62 @@ body {
   margin-bottom: var(--space-md);
 }
 
-/* ── Toolbar ───────────────────────────────── */
+/* ── Mode Nav (top-level navigation, prominent) ── */
+.mode-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 6px;
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+.mode-nav .mode-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.mode-nav .mode-btn:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+.mode-nav .mode-btn.active {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  box-shadow: 0 2px 6px rgba(45,106,79,0.25);
+}
+.mode-nav .mode-btn svg {
+  flex-shrink: 0;
+}
+
+/* ── Filter Bar (compact secondary tools) ──── */
+.filter-bar {
+  display: grid;
+  grid-template-columns: 1.6fr 180px 180px;
+  gap: var(--space-md);
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Legacy class for backwards compat */
 .toolbar {
   display: grid;
   grid-template-columns: 1.6fr 180px 180px;
@@ -144,7 +211,7 @@ input, select, button {
 input:focus, select:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(79,93,214,0.12);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.15);
 }
 #searchInput {
   padding-left: 40px;
@@ -335,7 +402,8 @@ select {
 .item-card[data-category="收音"] { border-left-color: var(--cat-audio); }
 .item-card[data-category="配件"] { border-left-color: var(--cat-accessory); }
 .item-card[data-category="支架"] { border-left-color: var(--cat-mount); }
-.item-card[data-category="鍵盤滑鼠"] { border-left-color: #e11d48; }
+.item-card[data-category="鍵盤滑鼠"] { border-left-color: var(--cat-accessory); }
+.item-card[data-category="耳機"] { border-left-color: var(--cat-camera); }
 
 /* Card Thumbnail — small uniform square, image fully visible (not cropped) */
 .card-thumb {
@@ -868,10 +936,12 @@ select {
 
 /* ── Responsive ────────────────────────────── */
 @media (max-width: 980px) {
-  .toolbar {
+  .toolbar,
+  .filter-bar {
     grid-template-columns: 1fr 1fr;
   }
-  .toolbar .search-wrap {
+  .toolbar .search-wrap,
+  .filter-bar .search-wrap {
     grid-column: 1 / -1;
   }
   .card-grid {
@@ -886,8 +956,11 @@ select {
   .app {
     padding: 12px;
   }
-  .panel {
-    padding: 12px;
+  .panel,
+  .content-panel,
+  .filter-bar,
+  .mode-nav {
+    padding: 10px;
     border-radius: var(--radius-md);
     margin-bottom: 10px;
   }
@@ -897,13 +970,35 @@ select {
   .app-header h1 {
     font-size: 22px;
   }
+  .app-stats-line {
+    font-size: 13px;
+    margin-top: 4px;
+  }
   .app-subtitle {
     font-size: 12px;
   }
-  .toolbar {
-    grid-template-columns: 1fr;
+  .toolbar,
+  .filter-bar {
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
+  .filter-bar .search-wrap {
+    grid-column: 1 / -1;
+  }
+  .mode-nav {
+    padding: 4px;
+    gap: 4px;
+  }
+  .mode-nav .mode-btn {
+    padding: 10px 8px;
+    font-size: 13px;
+    gap: 4px;
+  }
+  .mode-nav .mode-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+  /* Legacy toggle (kept for any leftover usage) */
   .mode-toggle {
     margin-top: 8px;
   }
