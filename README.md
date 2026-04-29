@@ -2,7 +2,10 @@
 
 團隊器材庫存查詢工具，資料來源為 Google Sheets，透過 GitHub Actions 自動同步。
 
-**線上版本**：https://kessycheung.github.io/inventory-lookup/
+**線上版本**：https://blocktempo-fo.github.io/inventory-lookup/
+
+- 同事借用入口：https://blocktempo-fo.github.io/inventory-lookup/
+- 管理員歸還入口：https://blocktempo-fo.github.io/inventory-lookup/?mode=admin
 
 ---
 

@@ -4,8 +4,8 @@
 
 這是一個**團隊器材庫存查詢工具**，部署在 GitHub Pages 上。
 
-- **GitHub Repo**: https://github.com/kessyCheung/inventory-lookup
-- **線上網址**: https://kessycheung.github.io/inventory-lookup/
+- **GitHub Repo**: https://github.com/blocktempo-fo/inventory-lookup
+- **線上網址**: https://blocktempo-fo.github.io/inventory-lookup/
 - **資料來源**: Google Sheets → GitHub Actions 每 30 分鐘同步 → `data.csv`
 - **技術棧**: 純前端（HTML + CSS + JS），無框架，使用 PapaParse CDN 解析 CSV
 
@@ -190,7 +190,7 @@ Google Sheets 匯出有很多 trailing commas（空欄位）。
 ## 八、如何繼續開發
 
 ### 8.1 在另一個 Claude Code 中開始
-1. Clone repo: `git clone https://github.com/kessyCheung/inventory-lookup.git`
+1. Clone repo: `git clone https://github.com/blocktempo-fo/inventory-lookup.git`
 2. 本地測試: `cd inventory-lookup && python3 -m http.server 8000`
 3. 開啟 `http://localhost:8000` 查看
 4. 修改 `index.html` / `style.css` / `script.js`

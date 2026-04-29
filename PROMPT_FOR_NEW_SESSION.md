@@ -7,7 +7,7 @@
 ## 第一步：Clone 與熟悉
 
 ```
-git clone https://github.com/kessyCheung/inventory-lookup.git
+git clone https://github.com/blocktempo-fo/inventory-lookup.git
 cd inventory-lookup
 ```
 
@@ -28,7 +28,7 @@ python3 -m http.server 8000
 ## 專案背景摘要
 
 這是一個**器材檢索表網頁**，部署在 GitHub Pages：
-- 線上網址：https://kessycheung.github.io/inventory-lookup/
+- 線上網址：https://blocktempo-fo.github.io/inventory-lookup/
 - 資料來源：Google Sheets → GitHub Actions 每 30 分鐘同步 → `data.csv` → 前端讀取
 - 技術：純前端 HTML + CSS + JS，用 PapaParse CDN 解析 CSV，無框架
 - 目前有三種瀏覽模式：分類瀏覽 / 位置瀏覽 / 全部列表
