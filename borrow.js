@@ -130,9 +130,25 @@
                   <label for="bf_notes">備註</label>
                   <textarea id="bf_notes" rows="2" placeholder="其他備註"></textarea>
                 </div>
+
+                <!-- 借用前確認 -->
+                <div class="borrow-rules">
+                  <div class="borrow-rules-title">📋 借用前請確認</div>
+                  <ul class="borrow-rules-list">
+                    <li>器材歸還時須交給管理員（Kessy）檢查並協助歸位</li>
+                    <li>使用中如遇故障或缺件，請立即聯絡 Kessy 處理</li>
+                    <li>請於預計歸還日前完成歸還，逾期將影響後續借用</li>
+                    <li>器材限公務使用，不得私人外借或轉借他人</li>
+                  </ul>
+                  <label class="borrow-agree">
+                    <input type="checkbox" id="bf_agree" required />
+                    <span>我已閱讀並同意以上規則</span>
+                  </label>
+                </div>
+
                 <div class="borrow-form-actions">
                   <button type="button" class="btn-cancel" id="borrowCancelBtn">取消</button>
-                  <button type="submit" class="btn-submit" id="borrowSubmitBtn">確認借用</button>
+                  <button type="submit" class="btn-submit" id="borrowSubmitBtn" disabled>確認借用</button>
                 </div>
                 <div class="borrow-result" id="borrowResult" hidden></div>
               </form>
@@ -152,6 +168,13 @@
           this.submit();
         });
 
+        // Agree checkbox toggles submit button
+        const agreeCheckbox = overlay.querySelector('#bf_agree');
+        const submitBtn = overlay.querySelector('#borrowSubmitBtn');
+        agreeCheckbox.addEventListener('change', () => {
+          submitBtn.disabled = !agreeCheckbox.checked;
+        });
+
         // Set min date to tomorrow
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
@@ -169,8 +192,10 @@
         // Reset form
         this.el.querySelector('#borrowForm').reset();
         this.el.querySelector('#borrowResult').hidden = true;
-        this.el.querySelector('#borrowSubmitBtn').disabled = false;
+        // Submit button stays disabled until agree checkbox is checked
+        this.el.querySelector('#borrowSubmitBtn').disabled = true;
         this.el.querySelector('#borrowSubmitBtn').textContent = '確認借用';
+        this.el.querySelector('#bf_agree').checked = false;
 
         // Show
         this.el.classList.add('is-open');
@@ -215,7 +240,15 @@
         resultDiv.hidden = false;
         if (result.success) {
           resultDiv.className = 'borrow-result success';
-          resultDiv.innerHTML = `<strong>借用成功！</strong><br>借用單號: <span class="mono">${app.escapeHtml(result.loan_id || '')}</span>`;
+          resultDiv.innerHTML = `
+            <div class="success-icon">✅</div>
+            <div class="success-title">借用成功！</div>
+            <div class="success-detail">
+              借用單號：<span class="mono">${app.escapeHtml(result.loan_id || '')}</span><br>
+              器材：${app.escapeHtml(data.item_name)}<br>
+              預計歸還：${app.escapeHtml(data.due_date)}
+            </div>
+            <div class="success-note">📍 請至 ${app.escapeHtml(data.location)} 取用<br>歸還時請聯絡 Kessy 檢查歸位</div>`;
 
           // Optimistic update
           OptimisticCache.set(data.item_id, {
@@ -230,7 +263,8 @@
           app.Modal.close();
           app.render();
 
-          setTimeout(() => this.close(), 2000);
+          // Show success longer (3s) so user can see details
+          setTimeout(() => this.close(), 3000);
         } else {
           resultDiv.className = 'borrow-result error';
           resultDiv.textContent = result.message || '借用失敗';
@@ -427,8 +461,8 @@
           // 可借用 → 顯示借用按鈕
           area.innerHTML = `
             <button class="btn-borrow" type="button">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-              借用申請
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              我要借用
             </button>`;
           area.querySelector('.btn-borrow').addEventListener('click', () => {
             BorrowModal.open(item);
@@ -436,12 +470,14 @@
         } else if (status === '借出中') {
           // 借出中 → 顯示狀態 + 管理員可歸還
           const borrower = item['借用人'] || '';
+          const lendDate = item['借出日期'] || '';
           const dueDate = item['預計歸還日'] || '';
           let html = `
             <div class="borrow-status-badge borrowed">
-              <span class="status-dot" style="background:#ea580c"></span>
-              借出中${borrower ? ' — ' + app.escapeHtml(borrower) : ''}
-              ${dueDate ? '<br><small>預計歸還: ' + app.escapeHtml(dueDate) + '</small>' : ''}
+              <span class="status-dot" style="background:#d97706"></span>
+              <strong>借出中</strong>${borrower ? ' — ' + app.escapeHtml(borrower) : ''}
+              ${lendDate ? '<br><small>借出日：' + app.escapeHtml(lendDate.substring(0,10)) + '</small>' : ''}
+              ${dueDate ? '<br><small>預計歸還：' + app.escapeHtml(dueDate.substring(0,10)) + '</small>' : ''}
             </div>`;
 
           if (isAdmin) {
@@ -457,16 +493,28 @@
         } else if (status === '維修中') {
           area.innerHTML = `
             <div class="borrow-status-badge maintenance">
-              <span class="status-dot" style="background:#dc2626"></span>
-              維修中 — 暫不可借用
+              <span class="status-dot" style="background:#b91c1c"></span>
+              <strong>維修中</strong> — 暫不可借用
             </div>`;
         } else if (status === '停用') {
           area.innerHTML = `
             <div class="borrow-status-badge disabled">
               <span class="status-dot" style="background:#9ca3af"></span>
-              已停用
+              <strong>已停用</strong> — 不開放外借
             </div>`;
         }
+
+        // Always add "回報問題" link (Telegram contact)
+        const reportLink = document.createElement('a');
+        reportLink.className = 'btn-report-issue';
+        reportLink.href = 'https://t.me/cheunghy305';
+        reportLink.target = '_blank';
+        reportLink.rel = 'noopener noreferrer';
+        reportLink.innerHTML = `
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          回報問題 / 損壞 / 缺件 → Telegram 聯絡 Kessy
+        `;
+        area.appendChild(reportLink);
 
         modalInfo.appendChild(area);
       });

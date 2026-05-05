@@ -63,6 +63,8 @@
     currentMode: 'location', // 'category' | 'location' | 'all'
     searchQuery: '',
     locationFilter: '',
+    statusFilter: '',
+    onlyAvailable: false,
   };
 
   // ── DOM Cache ─────────────────────────────────────
@@ -72,6 +74,8 @@
   const dom = {
     searchInput: $('#searchInput'),
     locationFilter: $('#locationFilter'),
+    statusFilter: $('#statusFilter'),
+    onlyAvailable: $('#onlyAvailable'),
     sortBy: $('#sortBy'),
     totalCount: $('#totalCount'),
     visibleCount: $('#visibleCount'),
@@ -167,12 +171,17 @@
     getBaseFiltered() {
       const q = state.searchQuery.toLowerCase();
       const loc = state.locationFilter;
+      const stat = state.statusFilter;
+      const onlyAvail = state.onlyAvailable;
 
       return state.rows.filter(r => {
         const text = Object.values(r).join(' ').toLowerCase();
         const matchQ = !q || text.includes(q);
         const matchLoc = !loc || r['位置'] === loc;
-        return matchQ && matchLoc;
+        const status = (r['狀態'] || '可借用').trim() || '可借用';
+        const matchStat = !stat || status === stat;
+        const matchAvail = !onlyAvail || status === '可借用';
+        return matchQ && matchLoc && matchStat && matchAvail;
       });
     },
 
@@ -933,6 +942,32 @@
       state.currentTab = '全部';
       render();
     });
+
+    // Status filter
+    if (dom.statusFilter) {
+      dom.statusFilter.addEventListener('change', () => {
+        state.statusFilter = dom.statusFilter.value;
+        // If user picks a specific status filter, sync the checkbox
+        if (dom.onlyAvailable) {
+          dom.onlyAvailable.checked = (state.statusFilter === '可借用');
+          state.onlyAvailable = dom.onlyAvailable.checked;
+        }
+        render();
+      });
+    }
+
+    // Quick filter: only available
+    if (dom.onlyAvailable) {
+      dom.onlyAvailable.addEventListener('change', () => {
+        state.onlyAvailable = dom.onlyAvailable.checked;
+        // Sync status filter dropdown
+        if (dom.statusFilter) {
+          dom.statusFilter.value = state.onlyAvailable ? '可借用' : '';
+          state.statusFilter = dom.statusFilter.value;
+        }
+        render();
+      });
+    }
 
     // Sort
     dom.sortBy.addEventListener('change', (e) => {
