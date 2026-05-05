@@ -116,7 +116,14 @@
                 </div>
                 <div class="form-group">
                   <label for="bf_dept">部門 / 組別 <span class="required">*</span></label>
-                  <input type="text" id="bf_dept" required placeholder="例如：編輯部" />
+                  <select id="bf_dept" required>
+                    <option value="">請選擇部門</option>
+                    <option value="FO">FO</option>
+                    <option value="CT">CT</option>
+                    <option value="MKT">MKT</option>
+                    <option value="BD">BD</option>
+                    <option value="J/R">J/R</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="bf_due">預計歸還日期 <span class="required">*</span></label>
@@ -371,7 +378,14 @@
                 </div>
                 <div class="form-group">
                   <label for="bbf_dept">部門 / 組別 <span class="required">*</span></label>
-                  <input type="text" id="bbf_dept" required placeholder="例如：編輯部" />
+                  <select id="bbf_dept" required>
+                    <option value="">請選擇部門</option>
+                    <option value="FO">FO</option>
+                    <option value="CT">CT</option>
+                    <option value="MKT">MKT</option>
+                    <option value="BD">BD</option>
+                    <option value="J/R">J/R</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="bbf_due">預計歸還日期 <span class="required">*</span></label>
