@@ -1491,6 +1491,110 @@ select {
   100% { transform: scale(1); }
 }
 
+/* Centered Success Dialog */
+.success-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.success-dialog-overlay.is-open {
+  display: flex;
+  animation: success-fade-in 0.2s ease-out;
+}
+.success-dialog {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  padding: 28px 24px 20px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: success-pop 0.3s ease-out;
+  text-align: center;
+}
+.success-dialog-icon {
+  font-size: 56px;
+  line-height: 1;
+  margin-bottom: 8px;
+  animation: success-bounce 0.6s ease-out;
+}
+.success-dialog-title {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #15803d;
+}
+.success-dialog-body {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.success-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px dashed #d1fae5;
+  font-size: 13px;
+  color: #166534;
+}
+.success-row:last-child { border-bottom: none; }
+.success-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #15803d;
+  flex-shrink: 0;
+}
+.success-row .mono {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+}
+.success-dialog-note {
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #713f12;
+  line-height: 1.7;
+  text-align: left;
+}
+.success-dialog-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.success-dialog-btn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+.success-dialog-btn:active {
+  transform: scale(0.98);
+}
+@keyframes success-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* ── Admin Badge ── */
 .admin-badge {
   display: inline-block;

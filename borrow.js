@@ -237,19 +237,7 @@
 
         const result = await BorrowAPI.borrow(data);
 
-        resultDiv.hidden = false;
         if (result.success) {
-          resultDiv.className = 'borrow-result success';
-          resultDiv.innerHTML = `
-            <div class="success-icon">✅</div>
-            <div class="success-title">借用成功！</div>
-            <div class="success-detail">
-              借用單號：<span class="mono">${app.escapeHtml(result.loan_id || '')}</span><br>
-              器材：${app.escapeHtml(data.item_name)}<br>
-              預計歸還：${app.escapeHtml(data.due_date)}
-            </div>
-            <div class="success-note">📍 請至 ${app.escapeHtml(data.location)} 取用<br>歸還時請聯絡 Kessy 檢查歸位</div>`;
-
           // Optimistic update
           OptimisticCache.set(data.item_id, {
             '狀態': '借出中',
@@ -259,13 +247,21 @@
           });
           OptimisticCache.apply();
 
-          // Close detail modal and re-render
+          // Close borrow modal + detail modal
+          this.close();
           app.Modal.close();
           app.render();
 
-          // Show success longer (3s) so user can see details
-          setTimeout(() => this.close(), 3000);
+          // Show centered success dialog
+          showSuccessDialog({
+            loanId: result.loan_id || '',
+            itemName: data.item_name,
+            location: data.location,
+            dueDate: data.due_date,
+          });
+          return;
         } else {
+          resultDiv.hidden = false;
           resultDiv.className = 'borrow-result error';
           resultDiv.textContent = result.message || '借用失敗';
           btn.disabled = false;
@@ -273,6 +269,52 @@
         }
       },
     };
+
+    // ═══ Centered Success Dialog ═══════════════════════
+    function showSuccessDialog({ loanId, itemName, location, dueDate }) {
+      let dialog = document.getElementById('borrowSuccessDialog');
+      if (!dialog) {
+        dialog = document.createElement('div');
+        dialog.id = 'borrowSuccessDialog';
+        dialog.className = 'success-dialog-overlay';
+        dialog.innerHTML = `
+          <div class="success-dialog">
+            <div class="success-dialog-icon">✅</div>
+            <h3 class="success-dialog-title">借用成功！</h3>
+            <div class="success-dialog-body" id="successDialogBody"></div>
+            <div class="success-dialog-note" id="successDialogNote"></div>
+            <button type="button" class="success-dialog-btn" id="successDialogOk">確定</button>
+          </div>`;
+        document.body.appendChild(dialog);
+
+        const okBtn = dialog.querySelector('#successDialogOk');
+        const close = () => {
+          dialog.classList.remove('is-open');
+          document.body.style.overflow = '';
+        };
+        okBtn.addEventListener('click', close);
+        dialog.addEventListener('click', (e) => {
+          if (e.target === dialog) close();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && dialog.classList.contains('is-open')) close();
+        });
+      }
+
+      dialog.querySelector('#successDialogBody').innerHTML = `
+        <div class="success-row"><span class="success-label">借用單號</span><span class="mono">${app.escapeHtml(loanId)}</span></div>
+        <div class="success-row"><span class="success-label">器材</span><span>${app.escapeHtml(itemName)}</span></div>
+        <div class="success-row"><span class="success-label">取用位置</span><span>${app.escapeHtml(location)}</span></div>
+        <div class="success-row"><span class="success-label">預計歸還</span><span>${app.escapeHtml(dueDate)}</span></div>
+      `;
+      dialog.querySelector('#successDialogNote').innerHTML = `
+        📍 請至上述位置取用<br>
+        🔄 歸還時請聯絡 <strong>Kessy</strong> 檢查並協助歸位
+      `;
+
+      dialog.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
 
     // ═══ Return Modal (Admin only) ═══════════════════
     const ReturnModal = {
