@@ -1359,12 +1359,28 @@ select {
   color: #854d0e;
   margin-bottom: 8px;
 }
+.borrow-rules-highlight {
+  background: #fff;
+  border: 2px solid #d97706;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #92400e;
+  line-height: 1.5;
+}
+.borrow-rules-highlight strong { color: #92400e; }
 .borrow-rules-list {
   margin: 0 0 10px;
   padding-left: 18px;
   font-size: 12px;
   color: #713f12;
   line-height: 1.7;
+}
+.borrow-rules-list a {
+  color: #d97706;
+  font-weight: 600;
+  text-decoration: underline;
 }
 .borrow-rules-list li { margin-bottom: 2px; }
 .borrow-agree {
@@ -2002,12 +2018,60 @@ select {
   background: #fef9c3;
   border: 1px solid #fde047;
   border-radius: var(--radius-md);
-  padding: 10px 12px;
+  padding: 12px;
   margin-bottom: 16px;
+  font-size: 13px;
+  color: #713f12;
+  line-height: 1.6;
+  text-align: left;
+}
+.note-step {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 6px 0;
+}
+.note-step + .note-step { border-top: 1px dashed #fde047; }
+.note-step-important {
+  color: #92400e;
+  font-weight: 500;
+}
+.note-step-important strong {
+  background: #fef3c7;
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: #b45309;
+}
+.note-num {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: #d97706;
+  color: #fff;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.note-sub {
+  font-size: 11px;
+  font-weight: 400;
+  color: #92400e;
+}
+.note-tg {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #fde047;
   font-size: 12px;
   color: #713f12;
-  line-height: 1.7;
-  text-align: left;
+}
+.note-tg a {
+  color: #d97706;
+  font-weight: 600;
+  text-decoration: underline;
 }
 .success-dialog-btn {
   width: 100%;

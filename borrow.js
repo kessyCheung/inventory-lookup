@@ -141,9 +141,11 @@
                 <!-- 借用前確認 -->
                 <div class="borrow-rules">
                   <div class="borrow-rules-title">📋 借用前請確認</div>
+                  <div class="borrow-rules-highlight">
+                    🔄 <strong>歸還時務必親自將器材交給 Kessy 檢查歸位</strong>，不可自行放回原位
+                  </div>
                   <ul class="borrow-rules-list">
-                    <li>器材歸還時須交給管理員（Kessy）檢查並協助歸位</li>
-                    <li>使用中如遇故障或缺件，請立即聯絡 Kessy 處理</li>
+                    <li>使用中如遇故障或缺件，請立即聯絡 Kessy（<a href="https://t.me/cheunghy305" target="_blank" rel="noopener">Telegram</a>）</li>
                     <li>請於預計歸還日前完成歸還，逾期將影響後續借用</li>
                     <li>器材限公務使用，不得私人外借或轉借他人</li>
                   </ul>
@@ -656,8 +658,9 @@
         <div class="success-row"><span class="success-label">預計歸還</span><span>${app.escapeHtml(dueDate)}</span></div>
       `;
       dialog.querySelector('#bundleSuccessNote').innerHTML = `
-        📍 請至上述位置取用全部 ${count} 件器材<br>
-        🔄 歸還時請聯絡 <strong>Kessy</strong> 統一檢查並協助歸位
+        <div class="note-step"><span class="note-num">1</span>請至上述位置取用全部 ${count} 件器材</div>
+        <div class="note-step note-step-important"><span class="note-num">2</span>歸還時 <strong>親自將全部 ${count} 件交給 Kessy 檢查歸位</strong><br><span class="note-sub">（不可自行放回原位）</span></div>
+        <div class="note-tg">有問題：<a href="https://t.me/cheunghy305" target="_blank" rel="noopener">Telegram 聯絡 Kessy</a></div>
       `;
       dialog.classList.add('is-open');
       document.body.style.overflow = 'hidden';
@@ -701,8 +704,9 @@
         <div class="success-row"><span class="success-label">預計歸還</span><span>${app.escapeHtml(dueDate)}</span></div>
       `;
       dialog.querySelector('#successDialogNote').innerHTML = `
-        📍 請至上述位置取用<br>
-        🔄 歸還時請聯絡 <strong>Kessy</strong> 檢查並協助歸位
+        <div class="note-step"><span class="note-num">1</span>請至上述位置取用器材</div>
+        <div class="note-step note-step-important"><span class="note-num">2</span>歸還時 <strong>親自將器材交給 Kessy 檢查歸位</strong><br><span class="note-sub">（不可自行放回原位）</span></div>
+        <div class="note-tg">有問題：<a href="https://t.me/cheunghy305" target="_blank" rel="noopener">Telegram 聯絡 Kessy</a></div>
       `;
 
       dialog.classList.add('is-open');
