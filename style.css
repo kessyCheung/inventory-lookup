@@ -724,10 +724,10 @@ select {
    so hotspots stay aligned with the enlarged SVG. */
 @media (max-width: 600px) {
   .location-map-inner {
-    width: 760px;
+    width: 1100px;
   }
   .location-map {
-    width: 760px;
+    width: 1100px;
   }
 }
 

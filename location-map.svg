@@ -121,21 +121,21 @@
     <rect x="148" y="212" width="130" height="92" fill="url(#woodDoor)" rx="4" stroke="#9d7d52" stroke-width="1.2"/>
     <circle cx="158" cy="258" r="5" fill="#5d4530"/>
 
-    <text x="75" y="54" text-anchor="middle" font-size="18" font-weight="700" fill="#5d4530">左上</text>
-    <text x="75" y="78" text-anchor="middle" font-size="13" fill="#7d5b3a">配件 / 記憶卡</text>
-    <text x="213" y="54" text-anchor="middle" font-size="18" font-weight="700" fill="#5d4530">右上</text>
-    <text x="213" y="78" text-anchor="middle" font-size="13" fill="#7d5b3a">收音 / 麥克風</text>
-    <text x="75" y="154" text-anchor="middle" font-size="18" font-weight="700" fill="#5d4530">左中</text>
-    <text x="75" y="178" text-anchor="middle" font-size="13" fill="#7d5b3a">膠帶</text>
-    <text x="213" y="154" text-anchor="middle" font-size="18" font-weight="700" fill="#5d4530">右中</text>
-    <text x="213" y="178" text-anchor="middle" font-size="13" fill="#7d5b3a">相機 / DJI</text>
-    <text x="75" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="#5d4530">左下</text>
-    <text x="75" y="278" text-anchor="middle" font-size="13" fill="#7d5b3a">白板備品</text>
-    <text x="213" y="254" text-anchor="middle" font-size="18" font-weight="700" fill="#5d4530">右下</text>
-    <text x="213" y="278" text-anchor="middle" font-size="13" fill="#7d5b3a">醫藥箱 / 口罩</text>
+    <text x="75" y="50" text-anchor="middle" font-size="22" font-weight="800" fill="#5d4530">左上</text>
+    <text x="75" y="80" text-anchor="middle" font-size="16" fill="#7d5b3a">配件 / 記憶卡</text>
+    <text x="213" y="50" text-anchor="middle" font-size="22" font-weight="800" fill="#5d4530">右上</text>
+    <text x="213" y="80" text-anchor="middle" font-size="16" fill="#7d5b3a">收音 / 麥克風</text>
+    <text x="75" y="150" text-anchor="middle" font-size="22" font-weight="800" fill="#5d4530">左中</text>
+    <text x="75" y="180" text-anchor="middle" font-size="16" fill="#7d5b3a">膠帶</text>
+    <text x="213" y="150" text-anchor="middle" font-size="22" font-weight="800" fill="#5d4530">右中</text>
+    <text x="213" y="180" text-anchor="middle" font-size="16" fill="#7d5b3a">相機 / DJI</text>
+    <text x="75" y="250" text-anchor="middle" font-size="22" font-weight="800" fill="#5d4530">左下</text>
+    <text x="75" y="280" text-anchor="middle" font-size="16" fill="#7d5b3a">白板備品</text>
+    <text x="213" y="250" text-anchor="middle" font-size="22" font-weight="800" fill="#5d4530">右下</text>
+    <text x="213" y="280" text-anchor="middle" font-size="16" fill="#7d5b3a">醫藥箱 / 口罩</text>
   </g>
-  <text x="285" y="408" text-anchor="middle" font-size="20" font-weight="800" fill="#1f2937">木櫃子</text>
-  <text x="285" y="428" text-anchor="middle" font-size="12" fill="#4b5563">配件 / 收音 / 相機</text>
+  <text x="285" y="408" text-anchor="middle" font-size="24" font-weight="800" fill="#1f2937">木櫃子</text>
+  <text x="285" y="432" text-anchor="middle" font-size="14" fill="#4b5563">配件 / 收音 / 相機</text>
 
   <!-- Big Cart (3 tiers) -->
   <g transform="translate(490, 50)" filter="url(#softShadow)">
@@ -144,19 +144,19 @@
     <rect x="10" y="14" width="160" height="96" fill="#f8f9fa" rx="3"/>
     <rect x="10" y="116" width="160" height="96" fill="#f8f9fa" rx="3"/>
     <rect x="10" y="218" width="160" height="96" fill="#f8f9fa" rx="3"/>
-    <text x="90" y="56" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">上層</text>
-    <text x="90" y="80" text-anchor="middle" font-size="13" fill="#4b5563">鍵盤 / 滑鼠 / 耳機</text>
-    <text x="90" y="158" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">中層</text>
-    <text x="90" y="182" text-anchor="middle" font-size="13" fill="#4b5563">燈架 / 腳架 / 穩定器</text>
-    <text x="90" y="260" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">下層</text>
-    <text x="90" y="284" text-anchor="middle" font-size="13" fill="#4b5563">油壓腳架 / 兔籠</text>
+    <text x="90" y="52" text-anchor="middle" font-size="22" font-weight="800" fill="#1f2937">上層</text>
+    <text x="90" y="82" text-anchor="middle" font-size="15" fill="#4b5563">鍵盤 / 滑鼠 / 耳機</text>
+    <text x="90" y="154" text-anchor="middle" font-size="22" font-weight="800" fill="#1f2937">中層</text>
+    <text x="90" y="184" text-anchor="middle" font-size="15" fill="#4b5563">燈架 / 腳架 / 穩定器</text>
+    <text x="90" y="256" text-anchor="middle" font-size="22" font-weight="800" fill="#1f2937">下層</text>
+    <text x="90" y="286" text-anchor="middle" font-size="15" fill="#4b5563">油壓腳架 / 兔籠</text>
     <circle cx="20" cy="334" r="14" fill="#1a1d24" stroke="#0a0c10" stroke-width="2"/>
     <circle cx="20" cy="334" r="6" fill="#3a3f47"/>
     <circle cx="160" cy="334" r="14" fill="#1a1d24" stroke="#0a0c10" stroke-width="2"/>
     <circle cx="160" cy="334" r="6" fill="#3a3f47"/>
   </g>
-  <text x="580" y="408" text-anchor="middle" font-size="20" font-weight="800" fill="#1f2937">大推車</text>
-  <text x="580" y="428" text-anchor="middle" font-size="12" fill="#4b5563">鍵盤 / 燈架 / 油壓架</text>
+  <text x="580" y="408" text-anchor="middle" font-size="24" font-weight="800" fill="#1f2937">大推車</text>
+  <text x="580" y="432" text-anchor="middle" font-size="14" fill="#4b5563">鍵盤 / 燈架 / 油壓架</text>
 
   <!-- White Cart (small) — with item labels -->
   <g transform="translate(720, 100)" filter="url(#softShadow)">
@@ -164,24 +164,24 @@
     <rect x="-3" y="-5" width="146" height="10" fill="#e8e8e8" rx="3"/>
     <!-- Top shelf -->
     <rect x="8" y="10" width="124" height="120" fill="#f5f5f5" rx="3" stroke="#d0d0d0" stroke-width="0.8"/>
-    <text x="70" y="32" text-anchor="middle" font-size="11" font-weight="700" fill="#4b5563">上層</text>
+    <text x="70" y="32" text-anchor="middle" font-size="14" font-weight="800" fill="#4b5563">上層</text>
     <rect x="16" y="42" width="108" height="20" fill="#fff7ed" rx="3" stroke="#fbbf24" stroke-width="0.6"/>
-    <text x="70" y="56" text-anchor="middle" font-size="9" fill="#92400e">Godox SL60W</text>
+    <text x="70" y="56" text-anchor="middle" font-size="11" fill="#92400e">Godox SL60W</text>
     <rect x="16" y="68" width="108" height="20" fill="#fff7ed" rx="3" stroke="#fbbf24" stroke-width="0.6"/>
-    <text x="70" y="82" text-anchor="middle" font-size="9" fill="#92400e">VLJIM 平板補光</text>
+    <text x="70" y="82" text-anchor="middle" font-size="11" fill="#92400e">VLJIM 平板補光</text>
     <rect x="16" y="94" width="108" height="20" fill="#fff7ed" rx="3" stroke="#fbbf24" stroke-width="0.6"/>
-    <text x="70" y="108" text-anchor="middle" font-size="9" fill="#92400e">VLJIM 方形補光</text>
+    <text x="70" y="108" text-anchor="middle" font-size="11" fill="#92400e">VLJIM 方形補光</text>
     <!-- Bottom shelf -->
     <rect x="8" y="138" width="124" height="120" fill="#f5f5f5" rx="3" stroke="#d0d0d0" stroke-width="0.8"/>
-    <text x="70" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="#4b5563">下層</text>
+    <text x="70" y="160" text-anchor="middle" font-size="14" font-weight="800" fill="#4b5563">下層</text>
     <rect x="16" y="170" width="108" height="20" fill="#fff7ed" rx="3" stroke="#fbbf24" stroke-width="0.6"/>
-    <text x="70" y="184" text-anchor="middle" font-size="9" fill="#92400e">神牛方形補光</text>
+    <text x="70" y="184" text-anchor="middle" font-size="11" fill="#92400e">神牛方形補光</text>
     <circle cx="14" cy="280" r="11" fill="#5a5d65" stroke="#3a3f47" stroke-width="1.5"/>
     <circle cx="126" cy="280" r="11" fill="#5a5d65" stroke="#3a3f47" stroke-width="1.5"/>
   </g>
   <!-- Cart name below -->
-  <text x="790" y="408" text-anchor="middle" font-size="18" font-weight="800" fill="#1f2937">小推車</text>
-  <text x="790" y="426" text-anchor="middle" font-size="11" fill="#4b5563">補光燈 × 4</text>
+  <text x="790" y="408" text-anchor="middle" font-size="22" font-weight="800" fill="#1f2937">小推車</text>
+  <text x="790" y="430" text-anchor="middle" font-size="14" fill="#4b5563">補光燈 × 4</text>
 
   <!-- Pegboard (bigger) — with item labels -->
   <g transform="translate(900, 60)" filter="url(#softShadow)">
@@ -191,7 +191,7 @@
     <!-- Row 1: AG06 + Apple TV + 線材 -->
     <rect x="20" y="36" width="100" height="44" fill="#fef3c7" rx="4" opacity="0.95" stroke="#d97706" stroke-width="0.8" filter="url(#smallShadow)"/>
     <text x="70" y="54" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">YAMAHA</text>
-    <text x="70" y="68" text-anchor="middle" font-size="9" fill="#92400e">AG06 混音器</text>
+    <text x="70" y="68" text-anchor="middle" font-size="11" fill="#92400e">AG06 混音器</text>
 
     <rect x="130" y="36" width="100" height="44" fill="#dbeafe" rx="4" opacity="0.95" stroke="#3b82f6" stroke-width="0.8" filter="url(#smallShadow)"/>
     <text x="180" y="54" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Apple TV</text>
@@ -223,8 +223,8 @@
     <text x="130" y="263" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">📋 借用物品規則</text>
     <text x="130" y="277" text-anchor="middle" font-size="8" fill="#6b7280">請填寫借用單</text>
   </g>
-  <text x="1030" y="408" text-anchor="middle" font-size="20" font-weight="800" fill="#1f2937">洞洞板</text>
-  <text x="1030" y="428" text-anchor="middle" font-size="12" fill="#4b5563">音源線 / 轉接頭 / AG06 / Apple TV</text>
+  <text x="1030" y="408" text-anchor="middle" font-size="24" font-weight="800" fill="#1f2937">洞洞板</text>
+  <text x="1030" y="432" text-anchor="middle" font-size="14" fill="#4b5563">音源線 / 轉接頭 / AG06 / Apple TV</text>
 
   <!-- Floor area: ring light + tripods -->
   <g transform="translate(900, 440)">

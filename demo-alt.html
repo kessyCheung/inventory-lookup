@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>替代品功能 Demo</title>
+<style>
+  body { margin: 0; font-family: -apple-system, "PingFang TC", sans-serif; background: #f7f5f0; padding: 20px; }
+  h1 { font-size: 22px; color: #1f2a37; margin: 0 0 8px; }
+  .subtitle { color: #5b6573; font-size: 14px; margin-bottom: 24px; }
+  .demo-row { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .phone {
+    width: 360px;
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    border: 8px solid #1f2937;
+  }
+  .phone-label { font-weight: 700; text-align: center; color: #2d6a4f; margin-bottom: 12px; }
+  .bundle-section { padding: 12px 0; }
+  .bundle-title { font-size: 16px; font-weight: 800; color: #2d6a4f; margin-bottom: 4px; }
+  .bundle-subtitle { font-size: 12px; color: #5b6573; margin-bottom: 10px; }
+  .bundle-body { background: #fafaf7; border: 1px solid #e7e2d8; border-radius: 12px; padding: 8px 0; }
+  .bundle-group-anchor {
+    background: #e1efe7; padding: 10px 14px; margin: -8px -14px 0;
+    border-bottom: 2px solid #c5dccd; border-radius: 12px 12px 0 0;
+  }
+  .bundle-group { padding: 8px 14px; border-bottom: 1px solid #f1ede4; }
+  .bundle-group:last-child { border-bottom: none; }
+  .bundle-group-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .bundle-item {
+    display: flex; gap: 10px; padding: 8px 0; align-items: flex-start;
+    border-radius: 4px;
+  }
+  .bundle-item.is-current {
+    background: linear-gradient(90deg, #ecfdf5 0%, #fff 100%);
+    border-left: 3px solid #2d6a4f; padding-left: 10px;
+  }
+  .bundle-item input[type=checkbox] { width: 18px; height: 18px; flex-shrink: 0; accent-color: #2d6a4f; margin-top: 2px; }
+  .bundle-item input:disabled { opacity: 0.4; }
+  .bundle-item-name { font-size: 14px; font-weight: 600; color: #1f2937; }
+  .bundle-item.is-anchor .bundle-item-name { font-weight: 800; }
+  .bundle-current-tag {
+    display: inline-block; margin-left: 6px;
+    padding: 1px 8px; background: #2d6a4f; color: #fff;
+    font-size: 10px; font-weight: 700; border-radius: 999px;
+  }
+  .bundle-item-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; font-size: 11px; align-items: center; }
+  .mono { font-family: "SF Mono", Consolas, monospace; color: #9aa3b2; }
+  .bundle-status { padding: 1px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .available { background: #dcfce7; color: #15803d; }
+  .borrowed { background: #fef3c7; color: #b45309; }
+  .bundle-alt-tag {
+    font-size: 10px; color: #d97706; background: #fffbeb;
+    padding: 2px 8px; border-radius: 999px; border: 1px solid #fde68a;
+    font-weight: 600; display: inline-block; margin-top: 4px;
+  }
+  .bundle-item-notes { font-size: 11px; color: #5b6573; margin-top: 2px; }
+  .arrow {
+    text-align: center; font-size: 32px; align-self: center;
+    color: #d97706; padding: 0 8px;
+  }
+  .explanation {
+    background: #fffbeb; border-left: 4px solid #d97706;
+    padding: 14px 18px; border-radius: 8px;
+    max-width: 720px; margin: 24px auto;
+  }
+  .explanation strong { color: #92400e; }
+  @media (max-width: 850px) {
+    .demo-row { flex-direction: column; align-items: center; }
+    .arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<h1>📦 替代品功能 Demo — Sony A6400 套組</h1>
+<p class="subtitle">情境：某天 SanDisk 128G SD 卡（必備配件）被借走了 → 系統自動推薦其他可借用的 SD 卡</p>
+
+<div class="demo-row">
+
+  <!-- BEFORE -->
+  <div class="phone">
+    <div class="phone-label">情境 A：所有配件都可借</div>
+    <div class="bundle-section">
+      <div class="bundle-title">📦 一併借用建議</div>
+      <div class="bundle-subtitle">這台 SONY a6400 通常會搭配以下 9 件配件</div>
+      <div class="bundle-body">
+
+        <div class="bundle-group bundle-group-anchor">
+          <div class="bundle-group-title" style="color:#1b4332">🎯 主設備 (1)</div>
+          <label class="bundle-item is-current is-anchor">
+            <input type="checkbox" checked>
+            <div>
+              <div class="bundle-item-name">SONY a6400 微單相機<span class="bundle-current-tag">📍 你正在看這個</span></div>
+              <div class="bundle-item-meta"><span class="mono">BT-M-cam-001-01</span><span class="bundle-status available">可借用</span></div>
+            </div>
+          </label>
+        </div>
+
+        <div class="bundle-group">
+          <div class="bundle-group-title" style="color:#b91c1c">★ 必備 (2)</div>
+          <label class="bundle-item">
+            <input type="checkbox" checked>
+            <div>
+              <div class="bundle-item-name">SONY a6400 電池-1</div>
+              <div class="bundle-item-meta"><span class="mono">BT-M-cam-001-02</span><span class="bundle-status available">可借用</span></div>
+              <div class="bundle-item-notes">電池（任一顆）</div>
+            </div>
+          </label>
+          <label class="bundle-item">
+            <input type="checkbox" checked>
+            <div>
+              <div class="bundle-item-name">SanDisk 128G SDXC記憶卡</div>
+              <div class="bundle-item-meta"><span class="mono">BT-M-sd-002</span><span class="bundle-status available">可借用</span></div>
+              <div class="bundle-item-notes">SD 記憶卡（任一張）</div>
+            </div>
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">→</div>
+
+  <!-- AFTER (alt triggered) -->
+  <div class="phone" style="border-color:#d97706;">
+    <div class="phone-label" style="color:#d97706;">情境 B：SanDisk 128G 借出中</div>
+    <div class="bundle-section">
+      <div class="bundle-title">📦 一併借用建議</div>
+      <div class="bundle-subtitle">這台 SONY a6400 通常會搭配以下 9 件配件</div>
+      <div class="bundle-body">
+
+        <div class="bundle-group bundle-group-anchor">
+          <div class="bundle-group-title" style="color:#1b4332">🎯 主設備 (1)</div>
+          <label class="bundle-item is-current is-anchor">
+            <input type="checkbox" checked>
+            <div>
+              <div class="bundle-item-name">SONY a6400 微單相機<span class="bundle-current-tag">📍 你正在看這個</span></div>
+              <div class="bundle-item-meta"><span class="mono">BT-M-cam-001-01</span><span class="bundle-status available">可借用</span></div>
+            </div>
+          </label>
+        </div>
+
+        <div class="bundle-group">
+          <div class="bundle-group-title" style="color:#b91c1c">★ 必備 (2)</div>
+          <label class="bundle-item">
+            <input type="checkbox" checked>
+            <div>
+              <div class="bundle-item-name">SONY a6400 電池-1</div>
+              <div class="bundle-item-meta"><span class="mono">BT-M-cam-001-02</span><span class="bundle-status available">可借用</span></div>
+              <div class="bundle-item-notes">電池（任一顆）</div>
+            </div>
+          </label>
+
+          <label class="bundle-item" style="background:#fffbeb; border-radius:6px; padding:10px;">
+            <input type="checkbox" checked>
+            <div>
+              <div class="bundle-item-name">SONY 64G SDXC記憶卡</div>
+              <div class="bundle-item-meta"><span class="mono">BT-M-sd-001</span><span class="bundle-status available">可借用</span></div>
+              <span class="bundle-alt-tag">↳ 替代品（原 BT-M-sd-002 不可用）</span>
+              <div class="bundle-item-notes" style="margin-top:4px;">SD 記憶卡（任一張）</div>
+            </div>
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="explanation">
+  <p><strong>左邊（情境 A）</strong>：原本 Sheet 設定的必備 SD 卡是 <code>BT-M-sd-002</code>（SanDisk 128G）。系統直接顯示，預設勾選。</p>
+  <p><strong>右邊（情境 B）</strong>：當 <code>BT-M-sd-002</code> 變成「借出中」時，系統 <strong>自動換成替代品</strong> <code>BT-M-sd-001</code>（SONY 64G），並標示橘色 <strong>「↳ 替代品（原 BT-M-sd-002 不可用）」</strong> 提示。使用者勾選後借到的會是這張 64G。</p>
+  <p>替代品優先順序在 Google Sheets「配件包」分頁的 <strong>替代品</strong> 欄定義：<br>
+  <code>BT-M-sd-001,BT-M-sd-003</code> → 系統會依序檢查，第一個可借的就用它。</p>
+</div>
+
+</body>
+</html>
