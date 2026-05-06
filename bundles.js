@@ -173,8 +173,8 @@
         titleText = '📦 一併借用建議';
         subtitleText = `這台${escapeHtml(anchorName)}通常會搭配以下 ${totalCount - 1} 件配件`;
       } else {
-        titleText = '📦 屬於套組';
-        subtitleText = `這件器材是「${escapeHtml(anchorName)}」套組的一部分`;
+        titleText = '💡 順便看看：相關套組';
+        subtitleText = `這件器材也可搭配「${escapeHtml(anchorName)}」套組（不需要可忽略）`;
       }
 
       wrap.innerHTML = `
@@ -200,7 +200,7 @@
 
       const body = wrap.querySelector('#bundleBody');
 
-      // 分組渲染（主設備永遠在最上面）
+      // 分組渲染
       const byRole = { '主設備': [], '必備': [], '推薦': [], '選配': [] };
       for (const r of rows) {
         if (byRole[r.config.role]) byRole[r.config.role].push(r);
@@ -213,8 +213,32 @@
         { role: '選配',   label: '選配',   icon: '○', color: '#6b7280' },
       ];
 
+      // 從非主設備進入時：把使用者點的那件放最上面，其他改成「同套組其他配件」
+      const isFromAnchor = (entryRole === '主設備');
+      const currentRow = rows.find(r =>
+        r.config.itemId === cleanCurrentId ||
+        (r.usedAlt && r.usedAlt['編號'] === cleanCurrentId)
+      );
+
+      if (!isFromAnchor && currentRow) {
+        // Group 1: 你選的這個（最頂）
+        body.appendChild(buildGroup(
+          { role: 'current', label: '你選的這個', icon: '📍', color: '#2d6a4f' },
+          [currentRow],
+          entryRole,
+          cleanCurrentId
+        ));
+        // Divider
+        const divider = document.createElement('div');
+        divider.className = 'bundle-divider';
+        divider.innerHTML = `<span>👇 同套組其他配件（需要再勾選）</span>`;
+        body.appendChild(divider);
+      }
+
       for (const cfg of groupConfigs) {
-        const grpRows = byRole[cfg.role];
+        const grpRows = isFromAnchor
+          ? byRole[cfg.role]
+          : byRole[cfg.role].filter(r => r !== currentRow);
         if (!grpRows.length) continue;
         body.appendChild(buildGroup(cfg, grpRows, entryRole, cleanCurrentId));
       }
@@ -287,7 +311,9 @@
     // 建立一個分組（含主設備）
     function buildGroup(cfg, rows, entryRole, currentItemId) {
       const grp = document.createElement('div');
-      grp.className = `bundle-group bundle-group-${cfg.role === '主設備' ? 'anchor' : cfg.role}`;
+      // 'current' 群組視覺等同主設備（highlight、上邊背景）
+      const styleClass = (cfg.role === '主設備' || cfg.role === 'current') ? 'anchor' : cfg.role;
+      grp.className = `bundle-group bundle-group-${styleClass}`;
       grp.innerHTML = `
         <div class="bundle-group-title" style="color:${cfg.color}">
           <span>${cfg.icon}</span> ${escapeHtml(cfg.label)} (${rows.length})
@@ -313,14 +339,14 @@
       const isCurrent = (config.itemId === currentItemId) || (displayId === currentItemId);
       const unavailable = displayStatus !== '可借用';
 
-      // 預設勾選邏輯：
+      // 預設勾選邏輯（任何 item 都是「自己當主」的中心）：
       // - 入口=主設備：必備+推薦勾，選配不勾
-      // - 入口=必備/推薦/選配：只勾自己 + 主設備（若可借）
+      // - 入口=其他：只勾自己（你選的這個），其他套組成員不勾（讓使用者自己決定要不要一起借）
       let isChecked = false;
       if (entryRole === '主設備') {
         isChecked = (config.role === '主設備' || config.role === '必備' || config.role === '推薦');
       } else {
-        isChecked = isCurrent || config.role === '主設備';
+        isChecked = isCurrent;
       }
       if (unavailable) isChecked = false;
 

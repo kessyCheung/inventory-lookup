@@ -1728,6 +1728,22 @@ select {
   vertical-align: middle;
 }
 
+/* Divider between current-item group and bundle suggestions */
+.bundle-divider {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  padding: 10px 0 6px;
+  margin-bottom: -4px;
+  letter-spacing: 0.5px;
+  border-top: 1px dashed var(--color-border);
+  margin-top: 4px;
+}
+.bundle-divider span {
+  background: #fafaf7;
+  padding: 0 12px;
+}
+
 /* Anchor group special styling */
 .bundle-group-anchor {
   background: var(--color-accent-soft);
