@@ -162,14 +162,24 @@
       const anchorRow = rows.find(r => r.config.role === '主設備');
       const totalCount = rows.length;
       const availCount = rows.filter(r => r.status === '可借用' || r.usedAlt).length;
+      const borrowedCount = rows.filter(r => r.status === '借出中').length;
 
       // 入口角色（決定預設勾選邏輯）
       const entryRole = primary.role; // '主設備' / '必備' / '推薦' / '選配'
 
+      // Admin mode? 從 URL 判斷
+      const isAdminMode = new URLSearchParams(window.location.search).get('mode') === 'admin';
+      // 點到的器材是借出中時 → admin 模式進入「批次歸還」UI
+      const currentItemStatus = (currentItem['狀態'] || '').trim();
+      const isAdminReturnMode = isAdminMode && currentItemStatus === '借出中';
+
       // 標題：根據入口顯示不同 tone
       const anchorName = anchorRow?.item?.['項目'] || primary.groupId;
       let titleText, subtitleText;
-      if (entryRole === '主設備') {
+      if (isAdminReturnMode) {
+        titleText = '🔄 批次歸還';
+        subtitleText = `此套組目前有 ${borrowedCount} 件借出中，可勾選一起歸還`;
+      } else if (entryRole === '主設備') {
         titleText = '📦 一併借用建議';
         subtitleText = `這台${escapeHtml(anchorName)}通常會搭配以下 ${totalCount - 1} 件配件`;
       } else {
@@ -177,23 +187,34 @@
         subtitleText = `這件器材也可搭配「${escapeHtml(anchorName)}」套組（不需要可忽略）`;
       }
 
+      const statsHtml = isAdminReturnMode
+        ? `<span>共 <strong>${totalCount}</strong> 件</span>
+           <span class="sep">｜</span>
+           <span>你選了 <strong id="bundleSelectedCount">0</strong> 件</span>
+           <span class="sep">｜</span>
+           <span>套組借出中 <strong>${borrowedCount}</strong>/<strong>${totalCount}</strong></span>`
+        : `<span>共 <strong>${totalCount}</strong> 件</span>
+           <span class="sep">｜</span>
+           <span>你選了 <strong id="bundleSelectedCount">0</strong> 件</span>
+           <span class="sep">｜</span>
+           <span>套組可借 <strong>${availCount}</strong>/<strong>${totalCount}</strong></span>`;
+
+      const btnLabel = isAdminReturnMode ? '處理歸還' : '借用所選';
+      const btnClass = isAdminReturnMode ? 'bundle-return-btn' : 'bundle-borrow-btn';
+
       wrap.innerHTML = `
-        <div class="bundle-header">
+        <div class="bundle-header ${isAdminReturnMode ? 'is-return-mode' : ''}">
           <div class="bundle-title">${titleText}</div>
           <div class="bundle-subtitle">${subtitleText}</div>
         </div>
         ${bundles.length > 1 ? renderBundleTabs(bundles, primary.groupId) : ''}
         <div class="bundle-body" id="bundleBody"></div>
-        <div class="bundle-footer">
+        <div class="bundle-footer ${isAdminReturnMode ? 'is-return-mode' : ''}">
           <div class="bundle-stats">
-            <span>共 <strong>${totalCount}</strong> 件</span>
-            <span class="sep">｜</span>
-            <span>你選了 <strong id="bundleSelectedCount">0</strong> 件</span>
-            <span class="sep">｜</span>
-            <span>套組可借 <strong>${availCount}</strong>/<strong>${totalCount}</strong></span>
+            ${statsHtml}
           </div>
           <div class="bundle-actions">
-            <button type="button" class="bundle-borrow-btn" id="bundleBorrowBtn" disabled>借用所選</button>
+            <button type="button" class="${btnClass}" id="bundleBorrowBtn" disabled>${btnLabel}</button>
           </div>
         </div>
       `;
@@ -220,13 +241,15 @@
         (r.usedAlt && r.usedAlt['編號'] === cleanCurrentId)
       );
 
-      if (!isFromAnchor && currentRow) {
+      // Admin return mode 不重排，直接顯示完整套組（讓管理員看清楚整組狀態）
+      if (!isAdminReturnMode && !isFromAnchor && currentRow) {
         // Group 1: 你選的這個（最頂）
         body.appendChild(buildGroup(
           { role: 'current', label: '你選的這個', icon: '📍', color: '#2d6a4f' },
           [currentRow],
           entryRole,
-          cleanCurrentId
+          cleanCurrentId,
+          isAdminReturnMode
         ));
         // Divider
         const divider = document.createElement('div');
@@ -236,11 +259,11 @@
       }
 
       for (const cfg of groupConfigs) {
-        const grpRows = isFromAnchor
+        const grpRows = (isFromAnchor || isAdminReturnMode)
           ? byRole[cfg.role]
           : byRole[cfg.role].filter(r => r !== currentRow);
         if (!grpRows.length) continue;
-        body.appendChild(buildGroup(cfg, grpRows, entryRole, cleanCurrentId));
+        body.appendChild(buildGroup(cfg, grpRows, entryRole, cleanCurrentId, isAdminReturnMode));
       }
 
       // ── 計數 + 按鈕 ──
@@ -249,7 +272,11 @@
         wrap.querySelector('#bundleSelectedCount').textContent = selected;
         const btn = wrap.querySelector('#bundleBorrowBtn');
         btn.disabled = selected === 0;
-        btn.textContent = selected === 0 ? '請至少勾選 1 件' : (selected === 1 ? '借用 1 件' : `借用所選 ${selected} 件`);
+        if (isAdminReturnMode) {
+          btn.textContent = selected === 0 ? '請至少勾選 1 件' : (selected === 1 ? '處理歸還 1 件' : `處理歸還 ${selected} 件`);
+        } else {
+          btn.textContent = selected === 0 ? '請至少勾選 1 件' : (selected === 1 ? '借用 1 件' : `借用所選 ${selected} 件`);
+        }
       };
 
       wrap.addEventListener('change', (e) => {
@@ -257,13 +284,33 @@
       });
       updateCount();
 
-      // ── 借用按鈕 ──
+      // ── 按鈕點擊行為 ──
       wrap.querySelector('#bundleBorrowBtn').addEventListener('click', () => {
         const checked = Array.from(wrap.querySelectorAll('.bundle-item input[type=checkbox]:checked'));
         const items = checked.map(cb => findItemById(cb.dataset.itemId)).filter(Boolean);
         if (items.length === 0) return;
 
-        // 檢查必備或主設備是否漏勾（且該配件有可借的）
+        // Admin 歸還模式：開 ReturnModal 處理歸還
+        if (isAdminReturnMode) {
+          if (window.__returnModal) {
+            // 直接開 ReturnModal — 它本來就支援批次勾選，會用第一件作為主入口，
+            // 再讓管理者調整勾選清單
+            window.__returnModal.open(items[0]);
+            // 等 ReturnModal 渲染完成，把使用者選的所有 items 也勾起來
+            setTimeout(() => {
+              const ids = new Set(items.map(it => (it['編號'] || '').trim()));
+              document.querySelectorAll('.return-item-row input[type=checkbox]').forEach(cb => {
+                cb.checked = ids.has(cb.dataset.itemId);
+              });
+              // 觸發 update
+              const trigger = document.querySelector('.return-item-row input[type=checkbox]');
+              if (trigger) trigger.dispatchEvent(new Event('change', { bubbles: true }));
+            }, 100);
+          }
+          return;
+        }
+
+        // 借用流程：檢查必備或主設備是否漏勾（且該配件有可借的）
         const checkedIds = new Set(checked.map(cb => cb.dataset.itemId));
         const missing = rows.filter(r => {
           if (r.config.role !== '必備' && r.config.role !== '主設備') return false;
@@ -283,10 +330,8 @@
 
         // 單借 vs 批次借
         if (items.length === 1) {
-          // 單件 → 開原本的 BorrowModal
           if (window.__borrowModal) window.__borrowModal.open(items[0]);
         } else {
-          // 多件 → 開 BundleBorrow
           if (window.__bundleBorrow) window.__bundleBorrow.open(items, primary.groupId);
         }
       });
@@ -309,7 +354,7 @@
     }
 
     // 建立一個分組（含主設備）
-    function buildGroup(cfg, rows, entryRole, currentItemId) {
+    function buildGroup(cfg, rows, entryRole, currentItemId, isAdminReturnMode) {
       const grp = document.createElement('div');
       // 'current' 群組視覺等同主設備（highlight、上邊背景）
       const styleClass = (cfg.role === '主設備' || cfg.role === 'current') ? 'anchor' : cfg.role;
@@ -320,35 +365,46 @@
         </div>
       `;
       for (const r of rows) {
-        grp.appendChild(buildItemRow(r, entryRole, currentItemId));
+        grp.appendChild(buildItemRow(r, entryRole, currentItemId, isAdminReturnMode));
       }
       return grp;
     }
 
     // 建立一行配件
-    function buildItemRow({ config, item, status, usedAlt }, entryRole, currentItemId) {
+    function buildItemRow({ config, item, status, usedAlt }, entryRole, currentItemId, isAdminReturnMode) {
       const row = document.createElement('label');
       row.className = 'bundle-item';
 
-      // 決定要顯示的 item（原本的或替代品）
-      const displayItem = (status !== '可借用' && usedAlt) ? usedAlt : item;
+      // Admin 歸還模式：顯示「原本的器材」而不是替代品（因為要還的是原本那件）
+      const displayItem = isAdminReturnMode
+        ? (item || usedAlt)
+        : ((status !== '可借用' && usedAlt) ? usedAlt : item);
       const displayId = displayItem ? displayItem['編號'] : config.itemId;
       const displayName = displayItem ? displayItem['項目'] : config.notes;
       const displayStatus = displayItem ? ((displayItem['狀態'] || '可借用').trim() || '可借用') : '不存在';
 
       const isCurrent = (config.itemId === currentItemId) || (displayId === currentItemId);
-      const unavailable = displayStatus !== '可借用';
 
-      // 預設勾選邏輯（任何 item 都是「自己當主」的中心）：
-      // - 入口=主設備：必備+推薦勾，選配不勾
-      // - 入口=其他：只勾自己（你選的這個），其他套組成員不勾（讓使用者自己決定要不要一起借）
+      // 勾選邏輯
       let isChecked = false;
-      if (entryRole === '主設備') {
+      let disabled = false;
+
+      if (isAdminReturnMode) {
+        // Admin 歸還模式：借出中的預勾（且可勾），其他不可勾
+        isChecked = (displayStatus === '借出中');
+        disabled = (displayStatus !== '借出中');
+      } else if (entryRole === '主設備') {
+        // 借用：入口=主設備，必備+推薦勾
         isChecked = (config.role === '主設備' || config.role === '必備' || config.role === '推薦');
+        disabled = (displayStatus !== '可借用');
+        if (disabled) isChecked = false;
       } else {
+        // 借用：入口=其他，只勾自己
         isChecked = isCurrent;
+        disabled = (displayStatus !== '可借用');
+        if (disabled) isChecked = false;
       }
-      if (unavailable) isChecked = false;
+      const unavailable = disabled;
 
       if (isCurrent) row.classList.add('is-current');
       if (config.role === '主設備') row.classList.add('is-anchor');
@@ -411,13 +467,7 @@
         const item = app.Modal && app.Modal.currentItem;
         if (!item) return;
 
-        // Admin 模式：借出中的器材不顯示借用版套組面板（會跟 ReturnModal 衝突）
-        // ReturnModal 內部本來就有套組批次歸還的勾選 UI
-        if (isAdmin) {
-          const status = (item['狀態'] || '').trim();
-          if (status === '借出中') return;
-        }
-
+        // Admin 模式 + 借出中：renderBundleSection 內部會切換成「批次歸還」UI
         const section = renderBundleSection(item);
         if (section) modalInfo.appendChild(section);
       });
